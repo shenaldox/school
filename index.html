@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>King School System | Secure Portal</title>
+    <title>Grade 10 - Jayapala School</title>
     <style>
-        /* --- CSS VARIABLES & RESET --- */
+        /* --- CSS Variables & Reset --- */
         :root {
-            --primary-gold: #FFD700;   /* Royal Gold */
-            --primary-dark: #1a1a2e;   /* Deep Navy/Black */
-            --secondary-dark: #16213e;
-            --accent-red: #e94560;    /* Royal Red */
-            --text-light: #ecf0f1;
-            --text-dark: #333;
+            --primary-color: #4a6fa5; /* Soft Blue */
+            --secondary-color: #e8f1f2; /* Very Light Blue/Grey */
+            --accent-color: #6a89cc; /* Lighter Blue */
+            --text-dark: #2c3e50;
+            --text-light: #5f6c7b;
             --white: #ffffff;
-            --shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            --radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
             --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
@@ -26,40 +25,550 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: var(--font-family);
-            background-color: #f0f2f5;
-            color: var(--text-dark);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* App-like feel */
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* --- HEADER (King Branding) --- */
-        header {
-            background-color: var(--primary-dark);
-            color: var(--primary-gold);
-            padding: 1rem 2rem;
+        body {
+            font-family: var(--font-family);
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            /* Soft background image with overlay */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://picsum.photos/seed/school_env/1920/1080');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 5%;
+        }
+
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            z-index: 100;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            color: var(--primary-color);
+            text-decoration: none;
         }
 
-        .brand i {
-            color: var(--primary-gold);
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
         }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hamburger menu for mobile */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* --- Layout Containers --- */
+        section {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- Home Section --- */
+        .hero {
+            text-align: center;
+            padding: 6rem 1rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .teacher-card {
+            display: inline-block;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+            max-width: 500px;
+        }
+
+        .teacher-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .teacher-card p {
+            color: var(--text-light);
+        }
+
+        /* --- Students Section (Grid) --- */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .student-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            margin-bottom: 1rem;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+        }
+
+        .student-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .student-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Specific color tweaks based on sentiment if needed, kept neutral for now */
+
+        /* --- Report Section --- */
+        .report-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: var(--font-family);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* --- About Section --- */
+        .about-card {
+            background: var(--white);
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .creator-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background-color: #eee; /* Fallback */
+            object-fit: cover;
+        }
+
+        .contact-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.2rem;
+            background-color: #0088cc; /* Telegram Color */
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .contact-link:hover {
+            opacity: 0.9;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--text-dark);
+            color: var(--white);
+            margin-top: 3rem;
+        }
+
+        /* --- Custom Toast Notification --- */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #27ae60; /* Green for success */
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1001;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 17px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                padding-top: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Jayapala School</a>
+            <div class="hamburger" id="hamburger">
+                &#9776; <!-- Hamburger Icon -->
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#students">Class Info</a></li>
+                <li><a href="#report">Report</a></li>
+                <li><a href="#about">Credit</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <header id="home">
+        <div class="hero">
+            <h1>Jayapala School</h1>
+            <h2>Karukkuliya - Grade 10</h2>
+            
+            <div class="teacher-card">
+                <h3>Class Teacher</h3>
+                <p><strong>M.R.S. Pavithra Hirushini</strong></p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Dedicated to guiding students towards a bright future.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Students Section -->
+    <section id="students">
+        <h2 class="section-title">Our Class</h2>
+        <div class="students-grid">
+            
+            <!-- Card 1 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/ishan/150/150" alt="Ishan" class="student-avatar">
+                <h3 class="student-name">Ishan Nethmika</h3>
+                <p class="student-desc">A kind child, but his studies have been affected due to romantic relationships.</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/himash/150/150" alt="Himash" class="student-avatar">
+                <h3 class="student-name">Himash Sanjana</h3>
+                <p class="student-desc">Has shown poor school attendance in recent years.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/isuru/150/150" alt="Isuru" class="student-avatar">
+                <h3 class="student-name">Isuru Madusankha</h3>
+                <p class="student-desc">Studies with great enthusiasm.</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/naveen/150/150" alt="Naveen" class="student-avatar">
+                <h3 class="student-name">Naveen Tharusha</h3>
+                <p class="student-desc">Very intelligent; scored 153 marks in the scholarship examination.</p>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/malidu/150/150" alt="Malidu" class="student-avatar">
+                <h3 class="student-name">Malidu Hirushan</h3>
+                <p class="student-desc">Very diligent in his studies.</p>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/thikshana/150/150" alt="Thikshana" class="student-avatar">
+                <h3 class="student-name">Thikshana Viduranga</h3>
+                <p class="student-desc">Can overcome life due to his passion. Good luck!</p>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/sanjana/150/150" alt="Sanjana" class="student-avatar">
+                <h3 class="student-name">Sanjana Prabath</h3>
+                <p class="student-desc">Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</p>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="student-avatar">
+                <h3 class="student-name">Shenal Anuhas</h3>
+                <p class="student-desc">Website creator; personal information intentionally not included.</p>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/tharaka/150/150" alt="Tharaka" class="student-avatar">
+                <h3 class="student-name">Tharaka Prasanna</h3>
+                <p class="student-desc">Information intentionally not disclosed.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Report Sending Page -->
+    <section id="report">
+        <h2 class="section-title">Send a Report</h2>
+        <div class="report-container">
+            <form id="reportForm">
+                <div class="form-group">
+                    <label for="senderName">Sender Name</label>
+                    <input type="text" id="senderName" class="form-control" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentName">Student Name</label>
+                    <select id="studentName" class="form-control" required>
+                        <option value="" disabled selected>Select a student...</option>
+                        <option value="Ishan Nethmika">Ishan Nethmika</option>
+                        <option value="Himash Sanjana">Himash Sanjana</option>
+                        <option value="Isuru Madusankha">Isuru Madusankha</option>
+                        <option value="Naveen Tharusha">Naveen Tharusha</option>
+                        <option value="Malidu Hirushan">Malidu Hirushan</option>
+                        <option value="Thikshana Viduranga">Thikshana Viduranga</option>
+                        <option value="Sanjana Prabath">Sanjana Prabath</option>
+                        <option value="Shenal Anuhas">Shenal Anuhas</option>
+                        <option value="Tharaka Prasanna">Tharaka Prasanna</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportMessage">Report Message</label>
+                    <textarea id="reportMessage" class="form-control" placeholder="Type your report details here..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit Report</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- About / Credit Page -->
+    <section id="about">
+        <h2 class="section-title">Credits</h2>
+        <div class="about-card">
+            <img src="https://picsum.photos/seed/crypto/200/200" alt="Shenal Anuhas" class="creator-img">
+            <h3>Shenal Anuhas</h3>
+            <p style="color: var(--text-light); margin-bottom: 0.5rem;">Age: 15+</p>
+            <p>Developer & Designer</p>
+            <a href="https://t.me/Crypto_RIV" target="_blank" class="contact-link">Contact on Telegram</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Jayapala School, Karukkuliya. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Custom Toast Notification Element -->
+    <div id="toast">Report Sent Successfully!</div>
+
+    <script>
+        // --- Mobile Navigation Toggle ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // --- Report Form Handling ---
+        const reportForm = document.getElementById('reportForm');
+        const toast = document.getElementById('toast');
+
+        reportForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent actual page reload
+
+            // Get values (for potential backend use later)
+            const sender = document.getElementById('senderName').value;
+            const student = document.getElementById('studentName').value;
+            const message = document.getElementById('reportMessage').value;
+
+            // Simple validation check (HTML 'required' attribute handles most)
+            if(sender && student && message) {
+                // Show success alert/toast
+                showToast();
+                
+                // Reset form
+                reportForm.reset();
+            }
+        });
+
+        // Function to show the toast notification
+        function showToast() {
+            toast.className = "show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000); // Hide after 3 seconds
+        }
+    </script>
+</body>
+</html>        }
 
         .user-panel {
             display: flex;
