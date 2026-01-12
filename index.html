@@ -14,13 +14,15 @@
         :root {
             --primary-color: #4e54c8;
             --secondary-color: #8f94fb;
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-bg: rgba(20, 20, 20, 0.75); 
+            --glass-bg-light: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.3);
             --text-color: #fff;
             --text-dark: #333;
-            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             --owner-gold: #ffd700;
             --accent-red: #ff4757;
+            --chat-bg: rgba(0, 0, 0, 0.6);
         }
 
         * {
@@ -35,7 +37,7 @@
             min-height: 100vh;
             color: var(--text-color);
             overflow-x: hidden;
-            background-image: url('https://picsum.photos/seed/school123/1920/1080'); /* School Theme BG */
+            background-image: url('https://picsum.photos/seed/school123/1920/1080');
             background-size: cover;
             background-attachment: fixed;
             background-blend-mode: overlay;
@@ -55,10 +57,18 @@
 
         /* --- Glassmorphism Utilities --- */
         .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: var(--glass-bg-light);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .glass-content {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
         }
@@ -67,7 +77,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            padding-top: 100px; /* Space for fixed header */
+            padding-top: 110px;
         }
 
         /* --- Navigation Bar --- */
@@ -77,21 +87,20 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 15px 30px;
+            padding: 12px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -99,8 +108,9 @@
 
         .nav-links {
             display: flex;
-            gap: 15px; /* Reduced gap for more items */
+            gap: 10px;
             list-style: none;
+            overflow-x: auto;
         }
 
         .nav-links li a {
@@ -110,7 +120,8 @@
             padding: 8px 12px;
             border-radius: 20px;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            white-space: nowrap;
         }
 
         .nav-links li a:hover, .nav-links li a.active {
@@ -120,11 +131,11 @@
         }
 
         .user-badge {
-            display: none; /* Hidden by default */
+            display: none;
             background: var(--primary-color);
-            padding: 5px 15px;
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             align-items: center;
             gap: 5px;
@@ -139,7 +150,7 @@
 
         /* --- Sections General --- */
         section {
-            display: none; /* All sections hidden initially */
+            display: none;
             animation: fadeIn 0.6s ease-out;
         }
 
@@ -155,22 +166,35 @@
             border-bottom: 2px solid rgba(255,255,255,0.2);
             display: inline-block;
             padding-bottom: 10px;
+            color: #fff;
         }
 
         /* --- Home Section --- */
         .hero {
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 20px;
         }
+        
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
             background: linear-gradient(to right, #fff, #a1c4fd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- Cards (Teacher, Credits, Students, Announcements) --- */
+        .home-announcements {
+            margin-top: 40px;
+        }
+        
+        .home-ann-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        /* --- Cards --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -179,37 +203,44 @@
 
         .card {
             padding: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            transform: translateY(-5px);
         }
 
-        /* Specific for Announcement Cards */
+        /* Announcement Cards */
         .ann-card {
             text-align: left;
             border-left: 5px solid var(--secondary-color);
+            background: rgba(255, 255, 255, 0.15);
         }
+
         .ann-card.new {
             border-left: 5px solid var(--accent-red);
-            background: rgba(255, 71, 87, 0.1);
+            background: rgba(255, 71, 87, 0.2);
         }
 
         .ann-date {
             font-size: 0.8rem;
-            opacity: 0.7;
+            opacity: 0.8;
             margin-bottom: 5px;
             display: block;
+            color: #ccc;
         }
+
         .ann-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 10px;
             color: #fff;
+            font-weight: 600;
+        }
+        
+        .ann-card p {
+            color: #eee;
         }
 
         .avatar {
@@ -221,32 +252,23 @@
             object-fit: cover;
         }
 
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: rgba(255,255,255,0.9);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* --- Forms (Login, Register, Reports, Announcements) --- */
+        /* --- Forms --- */
         .form-container {
             max-width: 500px;
-            margin: 50px auto;
-            padding: 40px;
+            margin: 40px auto;
+            padding: 30px;
         }
 
         .form-group {
             margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .form-control {
@@ -254,7 +276,7 @@
             padding: 12px;
             border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3);
             color: #fff;
             font-size: 1rem;
             outline: none;
@@ -262,7 +284,7 @@
         }
 
         .form-control:focus {
-            background: rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.5);
             border-color: var(--secondary-color);
         }
 
@@ -286,7 +308,7 @@
         
         .btn-danger {
             background: linear-gradient(to right, #ff416c, #ff4b2b);
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         /* --- Chat Room --- */
@@ -294,6 +316,7 @@
             height: 70vh;
             display: flex;
             flex-direction: column;
+            background: var(--chat-bg);
         }
         
         .chat-messages {
@@ -305,61 +328,81 @@
             gap: 15px;
         }
 
+        /* Message Bubbles - High Contrast */
         .message {
-            max-width: 70%;
-            padding: 10px 15px;
-            border-radius: 15px;
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
             font-size: 0.95rem;
             position: relative;
             animation: fadeIn 0.3s ease;
+            word-wrap: break-word;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .msg-left {
             align-self: flex-start;
-            background: rgba(255,255,255,0.2);
-            border-bottom-left-radius: 2px;
+            background: #e0e0e0; /* Light Gray for others */
+            color: #111; /* Dark text */
+            border-bottom-left-radius: 4px;
         }
 
         .msg-right {
             align-self: flex-end;
-            background: var(--primary-color);
+            background: #8f94fb; /* Primary Blue for me */
             color: #fff;
-            border-bottom-right-radius: 2px;
+            border-bottom-right-radius: 4px;
         }
 
         .msg-owner {
-            background: linear-gradient(135deg, #ffd700, #b8860b);
+            align-self: center;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
             color: #000;
             font-weight: bold;
-            align-self: center;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            border: 1px solid #fff;
+            text-align: center;
+            border: 2px solid #fff;
         }
 
         .msg-sender {
-            font-size: 0.75rem;
-            opacity: 0.8;
+            font-size: 0.7rem;
+            opacity: 0.7;
             margin-bottom: 4px;
             display: block;
+            font-weight: bold;
         }
 
         .chat-input-area {
             padding: 15px;
             display: flex;
             gap: 10px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.5);
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         /* --- Reports --- */
         #report-list {
-            margin-top: 30px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
+
         .report-item {
-            background: rgba(0,0,0,0.2);
-            padding: 15px;
-            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
             border-radius: 8px;
-            border-left: 4px solid var(--secondary-color);
+            border-left: 5px solid var(--secondary-color);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+            margin-bottom: 8px;
         }
 
         /* --- Notifications --- */
@@ -367,7 +410,7 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             color: #fff;
             padding: 15px 25px;
             border-radius: 8px;
@@ -375,6 +418,7 @@
             transform: translateX(200%);
             transition: transform 0.3s ease;
             z-index: 2000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
         .toast.show {
             transform: translateX(0);
@@ -383,21 +427,31 @@
         /* --- Mobile Responsive --- */
         @media (max-width: 768px) {
             .nav-links {
-                display: none; 
+                display: none;
+                padding-bottom: 20px;
+                flex-direction: column;
+                width: 100%;
             }
             .nav-links.mobile-active {
                 display: flex;
-                flex-direction: column;
                 position: absolute;
-                top: 70px;
+                top: 60px;
                 left: 0;
-                width: 100%;
-                background: rgba(0,0,0,0.9);
+                background: rgba(0,0,0,0.95);
                 padding: 20px;
                 z-index: 999;
+                gap: 15px;
+            }
+            .nav-links li {
+                width: 100%;
+            }
+            .nav-links li a {
+                display: block;
+                width: 100%;
+                padding: 12px;
             }
             nav {
-                padding: 15px;
+                padding: 10px 15px;
             }
             .menu-toggle {
                 display: block;
@@ -429,21 +483,23 @@
             <li><a href="#" onclick="navigate('home')" class="active">Home</a></li>
             <li><a href="#" onclick="navigate('announcements')">Announcements</a></li>
             <li><a href="#" onclick="navigate('students')">සිසුන්</a></li>
-            <li><a href="#" onclick="navigate('teacher')">පන්තිභාර ගුරුතුමිය</a></li>
-            <li><a href="#" onclick="navigate('chat')">Chat Room</a></li>
+            <li><a href="#" onclick="navigate('teacher')">Teacher</a></li>
+            <li><a href="#" onclick="navigate('chat')">Chat</a></li>
             <li><a href="#" onclick="navigate('reports')">Reports</a></li>
-            <li><a href="#" onclick="navigate('credits')">About Credit</a></li>
+            <li><a href="#" onclick="navigate('credits')">Credit</a></li>
             
             <li id="nav-login"><a href="#" onclick="navigate('login')">Login</a></li>
             <li id="nav-register"><a href="#" onclick="navigate('register')">Register</a></li>
             <li id="nav-logout" style="display:none;"><a href="#" onclick="logout()">Logout</a></li>
         </ul>
 
-        <div id="user-display" class="user-badge">
-            <i class="fas fa-user-check"></i> <span id="username-span"></span>
-        </div>
-        <div id="owner-display" class="user-badge owner-badge">
-            <i class="fas fa-crown"></i> OWNER
+        <div style="display: flex; gap: 10px;">
+            <div id="user-display" class="user-badge">
+                <i class="fas fa-user-check"></i> <span id="username-span"></span>
+            </div>
+            <div id="owner-display" class="user-badge owner-badge">
+                <i class="fas fa-crown"></i>
+            </div>
         </div>
     </nav>
 
@@ -451,25 +507,36 @@
 
         <!-- 1. Home Section -->
         <section id="home" class="active-section">
-            <div class="hero glass">
+            <div class="hero glass-content">
                 <h1>Grade 11 - Class of 2026</h1>
                 <p>Jayapala School, Karukkuliya</p>
                 <br>
-                <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto; color: #ddd;">
                     අපගේ පන්තියේ තොරතුරු, ප්‍රවෘත්ති සහ සහයෝගය හුවමාරු කර ගැනීම සඳහා නිර්මාණය කර ඇති නවීන වෙබ් අඩවියයි.
                 </p>
                 <br>
                 <button class="btn" style="width: auto; padding: 10px 30px;" onclick="navigate('students')">View Students</button>
             </div>
+
+            <!-- Latest Announcements Preview -->
+            <div class="home-announcements">
+                <h3 class="home-ann-title"><i class="fas fa-bullhorn"></i> Latest News</h3>
+                <div class="grid-container" id="home-ann-grid">
+                    <!-- JS loads here -->
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="btn" style="width: auto; background: rgba(255,255,255,0.1);" onclick="navigate('announcements')">View All Announcements</button>
+                </div>
+            </div>
         </section>
 
         <!-- 2. Announcements Section -->
         <section id="announcements">
-            <center><h2 class="section-title">පන්ති නිවේදන (Announcements)</h2></center>
+            <center><h2 class="section-title">Class Announcements</h2></center>
             
             <!-- Owner Only: Add Announcement Form -->
-            <div id="admin-announce-panel" class="glass form-container" style="display: none; border: 1px solid var(--owner-gold);">
-                <h3 style="color: var(--owner-gold); margin-bottom: 15px; text-align: center;"><i class="fas fa-bullhorn"></i> Post New Announcement</h3>
+            <div id="admin-announce-panel" class="glass-content form-container" style="display: none; border: 2px solid var(--owner-gold);">
+                <h3 style="color: var(--owner-gold); margin-bottom: 15px; text-align: center;"><i class="fas fa-crown"></i> Post New Announcement</h3>
                 <div class="form-group">
                     <label>මාතෘකාව (Title)</label>
                     <input type="text" id="ann-title" class="form-control" placeholder="Eg: Extra Class Tomorrow">
@@ -480,44 +547,43 @@
                 </div>
                 <button class="btn" onclick="postAnnouncement()">Post Announcement</button>
                 <br>
-                <button class="btn btn-danger" onclick="clearAllAnnouncements()">Delete All Announcements</button>
+                <button class="btn btn-danger" onclick="clearAllAnnouncements()">Delete All</button>
             </div>
 
             <br>
             <div class="grid-container" id="announcement-grid">
-                <!-- Announcements will load here -->
+                <!-- JS loads here -->
             </div>
         </section>
 
         <!-- 3. Students Section -->
         <section id="students">
-            <center><h2 class="section-title">Grade 11 - සිසුන්ගේ තොරතුරු</h2></center>
+            <center><h2 class="section-title">Grade 10 Students</h2></center>
             <div class="grid-container" id="student-grid">
-                <!-- Javascript will populate this -->
+                <!-- JS loads here -->
             </div>
         </section>
 
         <!-- 4. Teacher Section -->
         <section id="teacher">
-            <center><h2 class="section-title">පන්තිභාර ගුරුතුමිය</h2></center>
-            <div class="glass card" style="max-width: 500px; margin: 0 auto;">
+            <center><h2 class="section-title">Class Teacher</h2></center>
+            <div class="glass-content card" style="max-width: 500px; margin: 0 auto;">
                 <img src="https://ui-avatars.com/api/?name=Pavithra+Hirushini&background=8f94fb&color=fff&size=150" alt="Teacher" class="avatar">
                 <h3>M.R.S. Pavithra Hirushini</h3>
-                <p style="font-weight: bold; color: var(--secondary-color);">Grade 11 Class Teacher</p>
-                <br>
-                <p>"දරුවන්ගේ අනාගතය සාර්ථක කිරීම සඳහා කැපවී සිටින අපගේ මාර්ගයෝත්මක ආදර්ශයයි."</p>
+                <p style="font-weight: bold; color: var(--secondary-color); margin-bottom: 10px;">Grade 11 Class Teacher</p>
+                <p>"We are committed to guiding our students towards a bright future."</p>
             </div>
         </section>
 
         <!-- 5. Chat Room -->
         <section id="chat">
             <center><h2 class="section-title">Class Chat Room</h2></center>
-            <div class="glass chat-container">
+            <div class="glass-content chat-container">
                 <div class="chat-messages" id="chat-box">
-                    <!-- Messages go here -->
+                    <!-- JS loads messages here -->
                 </div>
                 <div class="chat-input-area">
-                    <input type="text" id="chat-input" class="form-control" placeholder="මෙහි ලියන්න..." onkeypress="handleChatEnter(event)">
+                    <input type="text" id="chat-input" class="form-control" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
                     <button class="btn" style="width: auto;" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
@@ -525,41 +591,50 @@
 
         <!-- 6. Report Sending -->
         <section id="reports">
-            <center><h2 class="section-title">Report Sending System</h2></center>
+            <center><h2 class="section-title">Report System</h2></center>
             
-            <div class="glass form-container">
-                <h3 style="margin-bottom: 20px;">අලුත් Report එකක් යවන්න</h3>
+            <div class="glass-content form-container">
+                <h3 style="margin-bottom: 20px;">Send a Report</h3>
                 <div class="form-group">
-                    <label>යවන්නාගේ නම</label>
-                    <input type="text" id="rep-name" class="form-control" placeholder="ඔබේ නම">
+                    <label>Your Name</label>
+                    <input type="text" id="rep-name" class="form-control" placeholder="Name">
                 </div>
                 <div class="form-group">
-                    <label>විෂයය</label>
-                    <input type="text" id="rep-subject" class="form-control" placeholder="විෂය">
+                    <label>Subject</label>
+                    <input type="text" id="rep-subject" class="form-control" placeholder="Subject">
                 </div>
                 <div class="form-group">
-                    <label>පණිවිඩය</label>
-                    <textarea id="rep-msg" class="form-control" rows="4" placeholder="විස්තර..."></textarea>
+                    <label>Message</label>
+                    <textarea id="rep-msg" class="form-control" rows="4" placeholder="Details..."></textarea>
                 </div>
                 <button class="btn" onclick="submitReport()">Submit Report</button>
             </div>
 
-            <div id="report-list-container" style="display: none; margin-top: 40px;">
-                <h3 style="margin-bottom: 15px; border-bottom: 1px solid #fff;">Received Reports (Owner Only)</h3>
+            <!-- Owner Only: View Reports -->
+            <div id="report-list-container" class="glass-content" style="margin-top: 40px; padding: 20px; display: none;">
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid #fff; padding-bottom: 10px;">
+                    <i class="fas fa-file-alt"></i> Received Reports (Owner Only)
+                </h3>
+                
                 <div id="report-list">
-                    <!-- Reports load here -->
+                    <!-- JS loads reports here -->
                 </div>
+            </div>
+            
+            <!-- Error / Info Message Area -->
+            <div id="report-login-msg" class="glass-content" style="margin-top: 20px; padding: 15px; text-align: center; display: none; background: rgba(255, 71, 87, 0.2);">
+                <i class="fas fa-lock"></i> Please login as <strong>Owner</strong> to view reports.
             </div>
         </section>
 
         <!-- 7. Credit Page -->
         <section id="credits">
             <center><h2 class="section-title">About Credit</h2></center>
-            <div class="glass card" style="max-width: 400px; margin: 0 auto; animation: float 6s ease-in-out infinite;">
+            <div class="glass-content card" style="max-width: 400px; margin: 0 auto; animation: float 6s ease-in-out infinite;">
                 <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="avatar" style="border-color: var(--owner-gold);">
                 <h3 style="color: var(--owner-gold);">Shenal Anuhas</h3>
                 <p style="margin-bottom: 10px;"><strong>Age:</strong> 15+</p>
-                <p style="margin-bottom: 20px;">Full Stack Developer | Web Designer</p>
+                <p style="margin-bottom: 20px;">Full Stack Developer</p>
                 
                 <a href="https://t.me/Crypto_RIV" target="_blank" class="btn" style="background: #0088cc;">
                     <i class="fab fa-telegram-plane"></i> Telegram
@@ -570,18 +645,18 @@
         <!-- 8. Login Page -->
         <section id="login">
             <center><h2 class="section-title">Login</h2></center>
-            <div class="glass form-container">
+            <div class="glass-content form-container">
                 <div class="form-group">
-                    <label>සම්පූර්ණ නම</label>
+                    <label>Full Name</label>
                     <input type="text" id="login-name" class="form-control" placeholder="User Name">
                 </div>
                 <div class="form-group">
-                    <label>මුරපදය</label>
+                    <label>Password</label>
                     <input type="password" id="login-pass" class="form-control" placeholder="Password">
                 </div>
                 <button class="btn" onclick="login()">Login</button>
                 <p style="margin-top: 15px; text-align: center; font-size: 0.9rem;">
-                    ගිණුමක් නැත්නම්? <a href="#" onclick="navigate('register')" style="color: var(--secondary-color);">Register කරන්න</a>
+                    No account? <a href="#" onclick="navigate('register')" style="color: var(--secondary-color);">Register</a>
                 </p>
             </div>
         </section>
@@ -589,18 +664,18 @@
         <!-- 9. Register Page -->
         <section id="register">
             <center><h2 class="section-title">Register</h2></center>
-            <div class="glass form-container">
+            <div class="glass-content form-container">
                 <div class="form-group">
-                    <label>සම්පූර්ණ නම</label>
-                    <input type="text" id="reg-name" class="form-control" placeholder="ඔබේ නම">
+                    <label>Full Name</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="Your Name">
                 </div>
                 <div class="form-group">
-                    <label>මුරපදය</label>
-                    <input type="password" id="reg-pass" class="form-control" placeholder="Password සෑදීම">
+                    <label>Password</label>
+                    <input type="password" id="reg-pass" class="form-control" placeholder="Create Password">
                 </div>
                 <button class="btn" onclick="register()">Create Account</button>
                 <p style="margin-top: 15px; text-align: center; font-size: 0.9rem;">
-                    දැනටමත් ගිණුමක් තිබේද? <a href="#" onclick="navigate('login')" style="color: var(--secondary-color);">Login වන්න</a>
+                    Already have an account? <a href="#" onclick="navigate('login')" style="color: var(--secondary-color);">Login</a>
                 </p>
             </div>
         </section>
@@ -613,14 +688,14 @@
     <script>
         // --- Data Section ---
         const studentsData = [
-            { name: "ඉෂාන් නෙත්මික", desc: "ඉෂාන් හොඳ ගුණගතික දරුවෙකි. නමුත් ආදර සම්බන්ධතා හේතුවෙන් ඔහුගේ අධ්‍යාපනයට බාධා වී ඇත.", color: "#ff7675" },
+            { name: "ඉෂාන් නෙත්මික", desc: "ඉෂාන් හොඳ ගුණගතික දරුවෙකි.", color: "#ff7675" },
             { name: "හිමාෂ් සංජන", desc: "පසුගිය වසර කිහිපය තුළ පාසල් පැමිණීම අඩු වී ඇත.", color: "#74b9ff" },
-            { name: "ඉසුරු මදුසංඛ", desc: "ඉතා උනන්දුවෙන් අධ්‍යාපනය කරයි. කතා කිරීම පාලනය කරගත යුතුය.", color: "#55efc4" },
-            { name: "නවීන් තරුෂ", desc: "ඉතා බුද්ධිමත් දරුවෙකි. ශිෂ්‍යත්ව විභාගයෙන් ලකුණු 153ක් ලබා ඇත.", color: "#ffeaa7" },
+            { name: "ඉසුරු මදුසංඛ", desc: "ඉතා උනන්දුවෙන් අධ්‍යාපනය කරයි.", color: "#55efc4" },
+            { name: "නවීන් තරුෂ", desc: "ඉතා බුද්ධිමත් දරුවෙකි.", color: "#ffeaa7" },
             { name: "මාලිදු හිරුෂාන්", desc: "ඉතා කැපවීමෙන් අධ්‍යාපනය කරන දරුවෙකි.", color: "#a29bfe" },
-            { name: "තික්ෂණ විදුරංග", desc: "උනන්දුව හේතුවෙන් ජීවිතයේ අභියෝග ජයගත හැකි දරුවෙකි. සුභ පැතුම්.", color: "#fd79a8" },
+            { name: "තික්ෂණ විදුරංග", desc: "උනන්දුව හේතුවෙන් ජීවිතයේ අභියෝග ජයගත හැකි.", color: "#fd79a8" },
             { name: "සංජන ප්‍රබත්", desc: "Free Fire වීඩියෝ ක්‍රීඩාවට ඇබ්බැහිවීම නිසා අධ්‍යාපනය නොසලකා හරිමින් සිටී.", color: "#e17055" },
-            { name: "ශෙනාල් අනුහස්", desc: "මෙම වෙබ්සයිට් එක නිර්මාණය කළ බැවින්, තොරතුරු ඇතුළත් කර නොමැත.", color: "#6c5ce7", isOwner: true },
+            { name: "ශෙනාල් අනුහස්", desc: "Developer.", color: "#6c5ce7", isOwner: true },
             { name: "තාරක ප්‍රසන්න", desc: "තාරක ගැන විස්තර නොදක්වයි 😐", color: "#b2bec3" }
         ];
 
@@ -633,19 +708,16 @@
             renderStudents();
             checkSession();
             loadChat();
-            loadAnnouncements(); // Load announcements on start
+            loadAnnouncements();
         });
 
         // --- Navigation Logic ---
         function navigate(sectionId) {
-            // Hide all sections
             document.querySelectorAll('section').forEach(sec => sec.classList.remove('active-section'));
             document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
 
-            // Show target section
             document.getElementById(sectionId).classList.add('active-section');
             
-            // Highlight nav item
             const links = document.querySelectorAll('.nav-links a');
             links.forEach(link => {
                 if(link.getAttribute('onclick').includes(sectionId)) {
@@ -653,15 +725,22 @@
                 }
             });
 
-            // Close mobile menu if open
             document.getElementById('navLinks').classList.remove('mobile-active');
 
-            // If navigating to reports or announcements, check permissions
+            // Refresh specific components when navigating
             if(sectionId === 'reports') {
                 loadReports();
             }
             if(sectionId === 'announcements') {
-                renderAnnouncements(); // Re-render to ensure owner form status is correct
+                renderAnnouncements(); 
+            }
+            if(sectionId === 'home') {
+                renderHomeAnnouncements();
+            }
+            if(sectionId === 'chat') {
+                // Ensure chat is loaded and scrolled
+                loadChat();
+                scrollToBottom();
             }
         }
 
@@ -673,14 +752,13 @@
         function renderStudents() {
             const grid = document.getElementById('student-grid');
             grid.innerHTML = '';
-            
-            studentsData.forEach((student, index) => {
+            studentsData.forEach((student) => {
                 const avatarUrl = student.isOwner 
                     ? `https://ui-avatars.com/api/?name=${student.name}&background=ffd700&color=000&bold=true`
                     : `https://ui-avatars.com/api/?name=${student.name}&background=random`;
 
                 const card = document.createElement('div');
-                card.className = 'glass card';
+                card.className = 'glass-content card';
                 card.innerHTML = `
                     <img src="${avatarUrl}" alt="${student.name}" class="avatar">
                     <h3>${student.name} ${student.isOwner ? '<i class="fas fa-crown" style="color: gold;"></i>' : ''}</h3>
@@ -692,19 +770,42 @@
 
         // --- Announcement System ---
         function loadAnnouncements() {
-            // Check if any exist, if not, add a default one
             let announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
             if (announcements.length === 0) {
                 const defaultAnn = {
                     id: Date.now(),
                     title: "Welcome to Jayapala School System",
-                    msg: "This is the default announcement. Owner can add new announcements daily!",
+                    msg: "Welcome! This is the default announcement.",
                     date: new Date().toLocaleDateString()
                 };
                 announcements.push(defaultAnn);
                 localStorage.setItem('announcements', JSON.stringify(announcements));
             }
             renderAnnouncements();
+            renderHomeAnnouncements();
+        }
+
+        function renderHomeAnnouncements() {
+            const grid = document.getElementById('home-ann-grid');
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            grid.innerHTML = '';
+
+            announcements.sort((a, b) => b.id - a.id);
+            const previewList = announcements.slice(0, 2);
+
+            previewList.forEach((ann) => {
+                const card = document.createElement('div');
+                const isToday = ann.date === new Date().toLocaleDateString();
+                const cardClass = isToday ? 'glass-content ann-card new' : 'glass-content ann-card';
+
+                card.innerHTML = `
+                    <span class="ann-date"><i class="far fa-calendar-alt"></i> ${ann.date}</span>
+                    <h3 class="ann-title">${ann.title}</h3>
+                    <p>${ann.msg.substring(0, 100)}${ann.msg.length > 100 ? '...' : ''}</p>
+                `;
+                card.className = cardClass;
+                grid.appendChild(card);
+            });
         }
 
         function renderAnnouncements() {
@@ -714,21 +815,18 @@
             
             grid.innerHTML = '';
 
-            // Show/Hide Admin Panel based on Owner status
             if (isOwner) {
                 adminPanel.style.display = 'block';
             } else {
                 adminPanel.style.display = 'none';
             }
 
-            // Sort by ID (descending - newest first)
             announcements.sort((a, b) => b.id - a.id);
 
             announcements.forEach((ann) => {
                 const card = document.createElement('div');
-                // Add 'new' class if created today
                 const isToday = ann.date === new Date().toLocaleDateString();
-                const cardClass = isToday ? 'glass card ann-card new' : 'glass card ann-card';
+                const cardClass = isToday ? 'glass-content ann-card new' : 'glass-content ann-card';
 
                 card.innerHTML = `
                     <span class="ann-date"><i class="far fa-calendar-alt"></i> ${ann.date}</span>
@@ -745,7 +843,7 @@
             const msg = document.getElementById('ann-msg').value.trim();
 
             if (!title || !msg) {
-                showToast("කරුණාකර මාතෘකාව සහ විස්තර පුරවන්න!");
+                showToast("Please enter a title and message.");
                 return;
             }
 
@@ -760,19 +858,19 @@
             announcements.push(newAnn);
             localStorage.setItem('announcements', JSON.stringify(announcements));
 
-            // Clear inputs
             document.getElementById('ann-title').value = '';
             document.getElementById('ann-msg').value = '';
 
-            showToast("නිවේදනය සාර්ථකව පළ කරන ලදි!");
+            showToast("Announcement Posted!");
             renderAnnouncements();
+            renderHomeAnnouncements();
         }
 
         function clearAllAnnouncements() {
-            if(confirm("ඔබට විශ්වාස ද? සියලු නිවේදන මකන්න.")) {
+            if(confirm("Delete all announcements?")) {
                 localStorage.removeItem('announcements');
-                loadAnnouncements(); // Reload default
-                showToast("සියලු නිවේදන මකන ලදි.");
+                loadAnnouncements();
+                showToast("All announcements cleared.");
             }
         }
 
@@ -799,19 +897,19 @@
             const pass = document.getElementById('reg-pass').value.trim();
 
             if (!name || !pass) {
-                showToast("කරුණාකර සියලු විස්තර පුරවන්න!");
+                showToast("Please fill in all fields.");
                 return;
             }
 
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             if (users.find(u => u.name === name)) {
-                showToast("මෙම නමින් පරිශීලකයෙක් සිටී.");
+                showToast("User already exists.");
                 return;
             }
 
             users.push({ name, pass });
             localStorage.setItem('users', JSON.stringify(users));
-            showToast("ලියාපදිංචිය සාර්ථකයි! Login වන්න.");
+            showToast("Registration successful!");
             navigate('login');
         }
 
@@ -819,20 +917,18 @@
             const name = document.getElementById('login-name').value.trim();
             const pass = document.getElementById('login-pass').value.trim();
 
-            // Hardcoded Owner Check
             if (name === 'Shenal Anuhas' && pass === 'shenal11') {
                 loginSuccess(name, true, true);
                 return;
             }
 
-            // Normal User Check
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             const validUser = users.find(u => u.name === name && u.pass === pass);
 
             if (validUser) {
                 loginSuccess(validUser.name, false, true);
             } else {
-                showToast("වැරදි නමක් හෝ මුරපදයක්!");
+                showToast("Invalid username or password.");
             }
         }
 
@@ -848,17 +944,20 @@
 
             if (isOwner) {
                 document.getElementById('owner-display').style.display = 'flex';
+            } else {
+                document.getElementById('owner-display').style.display = 'none';
             }
 
             if (saveSession) {
                 localStorage.setItem('currentUser', JSON.stringify({ name, isOwner }));
             }
             
-            showToast(`සාදරයෙන් පිළිගනිමු, ${name}!`);
-            navigate('home');
+            showToast(`Welcome, ${name}!`);
+            
+            // Reload Chat to update user's own messages styling
             loadChat(); 
             
-            // Re-render components that depend on login status
+            navigate('home');
             renderAnnouncements(); 
         }
 
@@ -876,17 +975,31 @@
             document.getElementById('login-name').value = '';
             document.getElementById('login-pass').value = '';
 
-            showToast("Logout විය.");
+            showToast("Logged out.");
             navigate('home');
-            renderAnnouncements(); // Hide admin panel
+            
+            // Reload Chat to clear styling for own messages
+            loadChat();
+            renderAnnouncements();
         }
 
-        // --- Chat Room ---
+        // --- Chat Room Logic (FIXED) ---
         function loadChat() {
             const chatBox = document.getElementById('chat-box');
             const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
             
             chatBox.innerHTML = '';
+            
+            // If empty, show a system message
+            if (messages.length === 0) {
+                const sysMsg = document.createElement('div');
+                sysMsg.style.textAlign = 'center';
+                sysMsg.style.opacity = '0.6';
+                sysMsg.style.padding = '20px';
+                sysMsg.innerText = "No messages yet. Start the conversation!";
+                chatBox.appendChild(sysMsg);
+            }
+
             messages.forEach(msg => {
                 appendMessageToUI(msg);
             });
@@ -897,8 +1010,9 @@
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
             
-            if (!text || !currentUser) {
-                if(!currentUser) showToast("Chat කිරීමට පළමුව Login වන්න.");
+            if (!text) return;
+            if (!currentUser) {
+                showToast("Please login to chat.");
                 return;
             }
 
@@ -920,11 +1034,22 @@
 
         function appendMessageToUI(msg) {
             const chatBox = document.getElementById('chat-box');
+            
+            // If chat box is empty except system msg, clear it first (optional polish)
+            if (chatBox.children.length === 1 && chatBox.children[0].innerText === "No messages yet. Start the conversation!") {
+                chatBox.innerHTML = '';
+            }
+
             const div = document.createElement('div');
             
-            let className = 'message msg-left';
-            if (msg.isOwner) className = 'message msg-owner';
-            else if (msg.user === currentUser) className = 'message msg-right';
+            let className = 'message msg-left'; // Default: Others (Left)
+            
+            // Logic: If I sent it -> Right. If Owner sent it -> Center.
+            if (msg.isOwner) {
+                className = 'message msg-owner';
+            } else if (msg.user === currentUser) {
+                className = 'message msg-right';
+            }
 
             div.innerHTML = `
                 <span class="msg-sender">${msg.user} ${msg.isOwner ? '<i class="fas fa-crown"></i>' : ''} • ${msg.time}</span>
@@ -936,21 +1061,24 @@
 
         function scrollToBottom() {
             const chatBox = document.getElementById('chat-box');
-            chatBox.scrollTop = chatBox.scrollHeight;
+            // Small delay to ensure DOM updated
+            setTimeout(() => {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 50);
         }
 
         function handleChatEnter(e) {
             if (e.key === 'Enter') sendMessage();
         }
 
-        // --- Report System ---
+        // --- Report System Logic (FIXED) ---
         function submitReport() {
             const name = document.getElementById('rep-name').value.trim();
             const subject = document.getElementById('rep-subject').value.trim();
             const msg = document.getElementById('rep-msg').value.trim();
 
             if (!name || !subject || !msg) {
-                showToast("කරුණාකර සියලු ක්ෂේත්‍ර පුරවන්න.");
+                showToast("Please fill all fields.");
                 return;
             }
 
@@ -960,8 +1088,7 @@
             reports.push(newReport);
             localStorage.setItem('reports', JSON.stringify(reports));
 
-            console.log("Simulating save to creds.txt:", newReport);
-            showToast("Report එක සාර්ථකව යවන ලදි! (Saved to creds.txt)");
+            showToast("Report sent successfully!");
 
             document.getElementById('rep-name').value = '';
             document.getElementById('rep-subject').value = '';
@@ -971,28 +1098,40 @@
         function loadReports() {
             const container = document.getElementById('report-list-container');
             const list = document.getElementById('report-list');
+            const errorMsg = document.getElementById('report-login-msg');
             
-            if (!isOwner) {
-                container.style.display = 'none';
+            // Always reset visibility
+            container.style.display = 'none';
+            errorMsg.style.display = 'none';
+
+            if (!currentUser || !isOwner) {
+                // Not logged in as owner
+                errorMsg.style.display = 'block';
                 return;
             }
 
+            // Logged in as owner
             container.style.display = 'block';
+            
             const reports = JSON.parse(localStorage.getItem('reports') || '[]');
             
             if (reports.length === 0) {
-                list.innerHTML = '<p style="text-align:center; opacity:0.7;">Reports කිසිවක් නැත.</p>';
+                list.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.7;"><i class="fas fa-folder-open"></i> No reports submitted yet.</div>';
                 return;
             }
 
             list.innerHTML = '';
-            reports.forEach((rep, index) => {
+            // Show newest first
+            reports.reverse().forEach((rep, index) => {
                 const item = document.createElement('div');
-                item.className = 'report-item glass';
+                item.className = 'report-item glass-content';
                 item.innerHTML = `
-                    <h4>#${index + 1} - ${rep.subject}</h4>
-                    <small>By: ${rep.name} | ${rep.date}</small>
-                    <p style="margin-top: 10px;">${rep.msg}</p>
+                    <div class="report-header">
+                        <strong>${rep.subject}</strong>
+                        <small style="color:#ccc;">${rep.date}</small>
+                    </div>
+                    <p style="margin-bottom: 5px; font-weight:600; color:var(--secondary-color);">From: ${rep.name}</p>
+                    <p style="margin-top: 10px; line-height: 1.4;">${rep.msg}</p>
                 `;
                 list.appendChild(item);
             });
