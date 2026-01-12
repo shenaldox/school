@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade 10 - Jayapala School</title>
+    <!-- Using Google Fonts for a soft, modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- CSS Variables & Reset --- */
         :root {
-            --primary-color: #4a6fa5; /* Soft Blue */
-            --secondary-color: #e8f1f2; /* Very Light Blue/Grey */
-            --accent-color: #6a89cc; /* Lighter Blue */
-            --text-dark: #2c3e50;
-            --text-light: #5f6c7b;
+            --primary-color: #5c6bc0;
+            --primary-dark: #3949ab;
+            --secondary-color: #26a69a;
+            --bg-color: #f3f4f6;
+            --text-color: #37474f;
+            --text-light: #78909c;
             --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.15);
-            --radius: 12px;
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -25,38 +26,38 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--font-family);
-            background-color: var(--secondary-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-            /* Soft background image with overlay */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://picsum.photos/seed/school_env/1920/1080');
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background: var(--bg-color);
+            /* Soft, comfortable background image */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)), 
+                              url('https://picsum.photos/seed/schoolbg/1920/1080');
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* --- Navigation --- */
-        nav {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
+        /* --- Header & Navigation --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--card-shadow);
             position: sticky;
             top: 0;
             z-index: 1000;
-            padding: 1rem 5%;
+            padding: 1rem 2rem;
         }
 
         .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .logo {
@@ -64,101 +65,119 @@
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
-        }
-
-        .nav-links {
-            list-style: none;
             display: flex;
-            gap: 2rem;
+            align-items: center;
+            gap: 10px;
         }
 
-        .nav-links a {
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
             text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Hamburger menu for mobile */
-        .hamburger {
-            display: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
             cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .login-btn {
+            background-color: var(--secondary-color);
+            color: white !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background-color: #00897b;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
             font-size: 1.5rem;
+            cursor: pointer;
         }
 
-        /* --- Layout Containers --- */
-        section {
-            padding: 4rem 5%;
+        /* --- Main Layout --- */
+        main {
+            flex: 1;
             max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-            position: relative;
+        .view {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--accent-color);
-            margin: 0.5rem auto 0;
-            border-radius: 2px;
+        .view.active {
+            display: block; /* Show active view */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- Home Section --- */
         .hero {
             text-align: center;
-            padding: 6rem 1rem;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: var(--radius);
-            margin-top: 2rem;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(5px);
+            margin-bottom: 3rem;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary-dark);
             margin-bottom: 1rem;
-            color: var(--text-dark);
         }
 
         .hero h2 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
         }
 
         .teacher-card {
-            display: inline-block;
-            background: var(--white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
             border-left: 5px solid var(--primary-color);
-            max-width: 500px;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: var(--card-shadow);
         }
 
-        .teacher-card h3 {
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
+        .teacher-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 1rem;
         }
 
-        .teacher-card p {
-            color: var(--text-light);
-        }
-
-        /* --- Students Section (Grid) --- */
-        .students-grid {
+        /* --- Students Section --- */
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
@@ -166,53 +185,65 @@
 
         .student-card {
             background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
         }
 
         .student-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        .student-avatar {
+        .student-header {
+            height: 80px;
+            background: var(--primary-color);
+            position: relative;
+        }
+
+        .student-img {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background-color: var(--secondary-color);
-            margin-bottom: 1rem;
+            border: 4px solid var(--white);
+            position: absolute;
+            bottom: -40px;
+            left: 20px;
+            background-color: #eee;
             object-fit: cover;
-            border: 3px solid var(--accent-color);
+        }
+
+        .student-body {
+            padding: 3rem 1.5rem 1.5rem;
         }
 
         .student-name {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--text-dark);
+            color: var(--primary-dark);
         }
 
         .student-desc {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-light);
-            font-style: italic;
+            background: #f9fafb;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary-color);
         }
 
-        /* Specific color tweaks based on sentiment if needed, kept neutral for now */
-
         /* --- Report Section --- */
-        .report-container {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+        .form-container {
             max-width: 600px;
             margin: 0 auto;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
         }
 
         .form-group {
@@ -222,108 +253,146 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-dark);
+            font-weight: 500;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
+            padding: 0.75rem;
+            border: 1px solid #cfd8dc;
             border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            font-family: var(--font-family);
+            font-family: inherit;
+            transition: var(--transition);
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.1);
         }
 
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .btn-submit {
+        button.btn-primary {
             width: 100%;
-            padding: 1rem;
+            padding: 0.85rem;
             background-color: var(--primary-color);
-            color: var(--white);
+            color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: var(--transition);
         }
 
-        .btn-submit:hover {
-            background-color: var(--accent-color);
+        button.btn-primary:hover {
+            background-color: var(--primary-dark);
         }
 
-        /* --- About Section --- */
-        .about-card {
+        /* --- About/Credits Section --- */
+        .credit-card {
             background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            padding: 3rem;
+            text-align: center;
             max-width: 500px;
             margin: 0 auto;
-            padding: 2.5rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            text-align: center;
         }
 
-        .creator-img {
-            width: 100px;
-            height: 100px;
+        .credit-avatar {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             margin-bottom: 1rem;
-            background-color: #eee; /* Fallback */
             object-fit: cover;
         }
 
-        .contact-link {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.6rem 1.2rem;
-            background-color: #0088cc; /* Telegram Color */
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: opacity 0.3s;
+        .credit-details {
+            margin: 1.5rem 0;
         }
 
-        .contact-link:hover {
-            opacity: 0.9;
+        .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #0088cc;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .telegram-link:hover {
+            background-color: #0077b5;
+            transform: translateY(-2px);
+        }
+
+        /* --- Auth Section (Login/Register) --- */
+        .auth-wrapper {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
         }
 
         /* --- Footer --- */
         footer {
+            background: var(--text-color);
+            color: white;
             text-align: center;
             padding: 2rem;
-            background-color: var(--text-dark);
-            color: var(--white);
-            margin-top: 3rem;
+            margin-top: auto;
         }
 
-        /* --- Custom Toast Notification --- */
+        /* --- Toast Notification --- */
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background-color: #27ae60; /* Green for success */
+            margin-left: -125px;
+            background-color: #333;
             color: #fff;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 50px;
             padding: 16px;
             position: fixed;
-            z-index: 1001;
+            z-index: 2000;
             left: 50%;
             bottom: 30px;
-            transform: translateX(-50%);
             font-size: 17px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             opacity: 0;
             transition: opacity 0.5s, bottom 0.5s;
         }
@@ -334,1398 +403,392 @@
             bottom: 50px;
         }
 
+        #toast.success { background-color: var(--secondary-color); }
+        #toast.error { background-color: #ef5350; }
+
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
-            .nav-links {
+            .nav-container {
+                flex-wrap: wrap;
+            }
+            
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+            }
+
+            nav ul {
                 display: none;
                 flex-direction: column;
                 width: 100%;
-                text-align: center;
-                padding-top: 1rem;
+                margin-top: 1rem;
+                background: var(--white);
+                padding: 1rem;
+                border-radius: 8px;
+                box-shadow: var(--card-shadow);
             }
 
-            .nav-links.active {
+            nav ul.show {
                 display: flex;
             }
 
-            .hamburger {
-                display: block;
+            nav li {
+                text-align: center;
             }
 
             .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero h2 {
-                font-size: 1.4rem;
+                font-size: 2rem;
             }
         }
     </style>
-</head>
-<body>
-
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">Jayapala School</a>
-            <div class="hamburger" id="hamburger">
-                &#9776; <!-- Hamburger Icon -->
-            </div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#students">Class Info</a></li>
-                <li><a href="#report">Report</a></li>
-                <li><a href="#about">Credit</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Home Section -->
-    <header id="home">
-        <div class="hero">
-            <h1>Jayapala School</h1>
-            <h2>Karukkuliya - Grade 10</h2>
-            
-            <div class="teacher-card">
-                <h3>Class Teacher</h3>
-                <p><strong>M.R.S. Pavithra Hirushini</strong></p>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Dedicated to guiding students towards a bright future.</p>
-            </div>
-        </div>
-    </header>
-
-    <!-- Students Section -->
-    <section id="students">
-        <h2 class="section-title">Our Class</h2>
-        <div class="students-grid">
-            
-            <!-- Card 1 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/ishan/150/150" alt="Ishan" class="student-avatar">
-                <h3 class="student-name">Ishan Nethmika</h3>
-                <p class="student-desc">A kind child, but his studies have been affected due to romantic relationships.</p>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/himash/150/150" alt="Himash" class="student-avatar">
-                <h3 class="student-name">Himash Sanjana</h3>
-                <p class="student-desc">Has shown poor school attendance in recent years.</p>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/isuru/150/150" alt="Isuru" class="student-avatar">
-                <h3 class="student-name">Isuru Madusankha</h3>
-                <p class="student-desc">Studies with great enthusiasm.</p>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/naveen/150/150" alt="Naveen" class="student-avatar">
-                <h3 class="student-name">Naveen Tharusha</h3>
-                <p class="student-desc">Very intelligent; scored 153 marks in the scholarship examination.</p>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/malidu/150/150" alt="Malidu" class="student-avatar">
-                <h3 class="student-name">Malidu Hirushan</h3>
-                <p class="student-desc">Very diligent in his studies.</p>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/thikshana/150/150" alt="Thikshana" class="student-avatar">
-                <h3 class="student-name">Thikshana Viduranga</h3>
-                <p class="student-desc">Can overcome life due to his passion. Good luck!</p>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/sanjana/150/150" alt="Sanjana" class="student-avatar">
-                <h3 class="student-name">Sanjana Prabath</h3>
-                <p class="student-desc">Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</p>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="student-avatar">
-                <h3 class="student-name">Shenal Anuhas</h3>
-                <p class="student-desc">Website creator; personal information intentionally not included.</p>
-            </div>
-
-            <!-- Card 9 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/tharaka/150/150" alt="Tharaka" class="student-avatar">
-                <h3 class="student-name">Tharaka Prasanna</h3>
-                <p class="student-desc">Information intentionally not disclosed.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Report Sending Page -->
-    <section id="report">
-        <h2 class="section-title">Send a Report</h2>
-        <div class="report-container">
-            <form id="reportForm">
-                <div class="form-group">
-                    <label for="senderName">Sender Name</label>
-                    <input type="text" id="senderName" class="form-control" placeholder="Enter your name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="studentName">Student Name</label>
-                    <select id="studentName" class="form-control" required>
-                        <option value="" disabled selected>Select a student...</option>
-                        <option value="Ishan Nethmika">Ishan Nethmika</option>
-                        <option value="Himash Sanjana">Himash Sanjana</option>
-                        <option value="Isuru Madusankha">Isuru Madusankha</option>
-                        <option value="Naveen Tharusha">Naveen Tharusha</option>
-                        <option value="Malidu Hirushan">Malidu Hirushan</option>
-                        <option value="Thikshana Viduranga">Thikshana Viduranga</option>
-                        <option value="Sanjana Prabath">Sanjana Prabath</option>
-                        <option value="Shenal Anuhas">Shenal Anuhas</option>
-                        <option value="Tharaka Prasanna">Tharaka Prasanna</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="reportMessage">Report Message</label>
-                    <textarea id="reportMessage" class="form-control" placeholder="Type your report details here..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn-submit">Submit Report</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- About / Credit Page -->
-    <section id="about">
-        <h2 class="section-title">Credits</h2>
-        <div class="about-card">
-            <img src="https://picsum.photos/seed/crypto/200/200" alt="Shenal Anuhas" class="creator-img">
-            <h3>Shenal Anuhas</h3>
-            <p style="color: var(--text-light); margin-bottom: 0.5rem;">Age: 15+</p>
-            <p>Developer & Designer</p>
-            <a href="https://t.me/Crypto_RIV" target="_blank" class="contact-link">Contact on Telegram</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2023 Jayapala School, Karukkuliya. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Custom Toast Notification Element -->
-    <div id="toast">Report Sent Successfully!</div>
-
-    <script>
-        // --- Mobile Navigation Toggle ---
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('nav-links');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when a link is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // --- Report Form Handling ---
-        const reportForm = document.getElementById('reportForm');
-        const toast = document.getElementById('toast');
-
-        reportForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent actual page reload
-
-            // Get values (for potential backend use later)
-            const sender = document.getElementById('senderName').value;
-            const student = document.getElementById('studentName').value;
-            const message = document.getElementById('reportMessage').value;
-
-            // Simple validation check (HTML 'required' attribute handles most)
-            if(sender && student && message) {
-                // Show success alert/toast
-                showToast();
-                
-                // Reset form
-                reportForm.reset();
-            }
-        });
-
-        // Function to show the toast notification
-        function showToast() {
-            toast.className = "show";
-            setTimeout(function(){ 
-                toast.className = toast.className.replace("show", ""); 
-            }, 3000); // Hide after 3 seconds
-        }
-    </script>
-</body>
-</html>   <style>     }
-
-        .user-panel {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-info {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .btn-logout {
-            background-color: var(--accent-red);
-            color: white;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            display: none; /* Hidden by default */
-        }
-
-        .btn-logout:hover {
-            opacity: 0.9;
-        }
-
-        /* --- MAIN CONTAINER --- */
-        .container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-
-        /* --- AUTH PANEL --- */
-        .auth-container {
-            background: var(--white);
-            width: 100%;
-            max-width: 420px;
-            padding: 2.5rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border-top: 5px solid var(--primary-gold);
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .auth-header h2 {
-            color: var(--primary-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: #7f8c8d;
-            transition: 0.3s;
-        }
-
-        .tab.active {
-            color: var(--primary-dark);
-            border-bottom: 3px solid var(--primary-gold);
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--secondary-dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-gold);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-dark);
-            color: var(--primary-gold);
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-submit:hover {
-            background-color: var(--secondary-dark);
-        }
-
-        .feedback-msg {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-            min-height: 20px;
-        }
-
-        .text-error { color: red; }
-        .text-success { color: green; }
-
-        /* --- DASHBOARD --- */
-        .dashboard {
-            display: none; /* Hidden initially */
-            width: 100%;
-            max-width: 1200px;
-            height: 85vh;
-            gap: 20px;
-        }
-
-        /* Chat Section */
-        .panel {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chat-panel {
-            flex: 2; /* Takes up 2/3 of width */
-        }
-
-        .report-panel {
-            flex: 1; /* Takes up 1/3 of width */
-        }
-
-        .panel-header {
-            background: var(--primary-dark);
-            color: var(--primary-gold);
-            padding: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Chat Window */
-        .chat-window {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background-color: #f9f9f9;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .message {
-            max-width: 75%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            position: relative;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            animation: popIn 0.3s ease;
-        }
-
-        .message.mine {
-            align-self: flex-end;
-            background-color: var(--primary-dark);
-            color: var(--text-light);
-            border-bottom-right-radius: 2px;
-        }
-
-        .message.others {
-            align-self: flex-start;
-            background-color: #e0e0e0;
-            color: var(--text-dark);
-            border-bottom-left-radius: 2px;
-        }
-
-        .msg-sender {
-            font-size: 0.7rem;
-            opacity: 0.7;
-            margin-bottom: 4px;
-            display: block;
-            font-weight: bold;
-        }
-
-        .chat-input-area {
-            padding: 15px;
-            background: #fff;
-            border-top: 1px solid #ddd;
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Report Section */
-        .report-content {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        textarea {
-            width: 100%;
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: none;
-            font-family: inherit;
-            margin-bottom: 10px;
-        }
-
-        .btn-report {
-            background-color: var(--accent-red);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn-report:hover {
-            background-color: #c0392b;
-        }
-
-        /* --- ANIMATIONS --- */
-        @keyframes popIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .dashboard {
-                flex-direction: column;
-                height: auto;
-                overflow-y: auto;
-            }
-            .chat-panel, .report-panel {
-                flex: none;
-                height: 500px;
-            }
-            header {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-    </style>
-    <!-- Using Google Fonts for a regal look -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <div class="brand" style="font-family: 'Cinzel', serif;">
-            <span>👑</span> KING SCHOOL
-        </div>
-        <div class="user-panel">
-            <span id="displayUsername" class="user-info">Guest</span>
-            <button id="logoutBtn" class="btn-logout" onclick="logout()">Logout</button>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="switchView('home')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M12 12v9"/></svg>
+                Jayapala School
+            </a>
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <nav>
+                <ul id="nav-links">
+                    <li><a onclick="switchView('home')" class="active">Home</a></li>
+                    <li><a onclick="switchView('students')">Students</a></li>
+                    <li><a onclick="switchView('report')">Report</a></li>
+                    <li><a onclick="switchView('about')">About</a></li>
+                    <!-- Login link in header -->
+                    <li><a onclick="switchView('auth')" class="login-btn">Login</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <div class="container">
-
-        <!-- AUTH VIEW -->
-        <div id="authView" class="auth-container">
-            <div class="auth-header">
-                <h2 style="font-family: 'Cinzel', serif;">Welcome to the Court</h2>
-                <p style="color: #666;">Please authenticate to enter.</p>
+    <!-- Main Content Area -->
+    <main>
+        
+        <!-- HOME VIEW -->
+        <section id="home" class="view active">
+            <div class="hero">
+                <h1>Grade 10 – Jayapala School</h1>
+                <h2>Karukkuliya</h2>
+                
+                <div class="teacher-card">
+                    <img src="https://picsum.photos/seed/teacher/200/200" alt="Class Teacher" class="teacher-avatar">
+                    <h3>Class Teacher</h3>
+                    <p style="font-size: 1.2rem; color: var(--primary-dark); margin-top: 0.5rem;">M.R.S. Pavithra Hirushini</p>
+                    <p style="margin-top: 1rem; color: var(--text-light);">Dedicated to guiding students towards a bright future through discipline and education.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="tabs">
-                <div class="tab active" id="tabLogin" onclick="switchTab('login')">Login</div>
-                <div class="tab" id="tabRegister" onclick="switchTab('register')">Register</div>
-            </div>
-
-            <!-- Login Form -->
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="loginName" class="form-control" placeholder="e.g., Owner" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPass" class="form-control" placeholder="Enter password" required>
-                </div>
-                <button type="submit" class="btn-submit">Enter Portal</button>
-                <div id="loginFeedback" class="feedback-msg"></div>
-            </form>
-
-            <!-- Register Form -->
-            <form id="registerForm" style="display: none;">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="regName" class="form-control" placeholder="Create your name" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="regPass" class="form-control" placeholder="Create password" required>
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" id="regConfirm" class="form-control" placeholder="Repeat password" required>
-                </div>
-                <button type="submit" class="btn-submit">Join School</button>
-                <div id="regFeedback" class="feedback-msg"></div>
-            </form>
-        </div>
-
-        <!-- DASHBOARD VIEW -->
-        <div id="dashboardView" class="dashboard">
-            
-            <!-- Chat Room -->
-            <div class="panel chat-panel">
-                <div class="panel-header">
-                    <span>🗨️ Royal Hall (Chat)</span>
-                    <span style="font-size: 0.8rem; opacity: 0.8;">Live</span>
-                </div>
-                <div id="chatWindow" class="chat-window">
-                    <!-- Messages go here -->
-                    <div class="message others">
-                        <span class="msg-sender">System</span>
-                        Welcome to King School. Be respectful.
+        <!-- STUDENTS VIEW -->
+        <section id="students" class="view">
+            <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary-dark);">Class Students</h2>
+            <div class="grid-container">
+                <!-- Student 1 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/ishan/150/150" alt="Ishan" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Ishan Nethmika</h3>
+                        <div class="student-desc">A kind child, but his studies have been affected due to romantic relationships.</div>
                     </div>
                 </div>
-                <div class="chat-input-area">
-                    <input type="text" id="msgInput" class="form-control" placeholder="Type your message here..." onkeypress="handleEnter(event)">
-                    <button class="btn-submit" style="width: auto; padding: 0 20px;" onclick="sendMessage()">Send</button>
+
+                <!-- Student 2 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/himash/150/150" alt="Himash" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Himash Sanjana</h3>
+                        <div class="student-desc">Has shown poor school attendance in recent years.</div>
+                    </div>
+                </div>
+
+                <!-- Student 3 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/isuru/150/150" alt="Isuru" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Isuru Madusankha</h3>
+                        <div class="student-desc">Studies with great enthusiasm. Keep it up!</div>
+                    </div>
+                </div>
+
+                <!-- Student 4 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/naveen/150/150" alt="Naveen" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Naveen Tharusha</h3>
+                        <div class="student-desc">Very intelligent; scored 153 marks in the scholarship examination.</div>
+                    </div>
+                </div>
+
+                <!-- Student 5 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/malidu/150/150" alt="Malidu" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Malidu Hirushan</h3>
+                        <div class="student-desc">Very diligent in his studies.</div>
+                    </div>
+                </div>
+
+                <!-- Student 6 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/thikshana/150/150" alt="Thikshana" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Thikshana Viduranga</h3>
+                        <div class="student-desc">Can overcome life due to his passion. Good luck!</div>
+                    </div>
+                </div>
+
+                <!-- Student 7 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/sanjana/150/150" alt="Sanjana" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Sanjana Prabath</h3>
+                        <div class="student-desc">Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</div>
+                    </div>
+                </div>
+
+                <!-- Student 8 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Shenal Anuhas</h3>
+                        <div class="student-desc">Website creator; personal information intentionally not included.</div>
+                    </div>
+                </div>
+
+                <!-- Student 9 -->
+                <div class="student-card">
+                    <div class="student-header"></div>
+                    <img src="https://picsum.photos/seed/tharaka/150/150" alt="Tharaka" class="student-img">
+                    <div class="student-body">
+                        <h3 class="student-name">Tharaka Prasanna</h3>
+                        <div class="student-desc">Information intentionally not disclosed.</div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Report System -->
-            <div class="panel report-panel">
-                <div class="panel-header">
-                    <span>⚠️ Report Issue</span>
-                </div>
-                <div class="report-content">
-                    <p style="margin-bottom: 10px; font-size: 0.9rem; color: #555;">
-                        Submitting a report will save details to <strong>creds.txt</strong>.
-                    </p>
-                    <textarea id="reportText" placeholder="Describe the issue here..."></textarea>
-                    <button class="btn-report" onclick="submitReport()">Save to creds.txt</button>
-                    <div id="reportFeedback" class="feedback-msg" style="text-align: center; margin-top: 10px;"></div>
-                </div>
+        <!-- REPORT VIEW -->
+        <section id="report" class="view">
+            <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary-dark);">Send Report</h2>
+            <div class="form-container">
+                <form id="reportForm" onsubmit="handleReportSubmit(event)">
+                    <div class="form-group">
+                        <label for="senderName">Your Name</label>
+                        <input type="text" id="senderName" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentName">Student Name</label>
+                        <select id="studentName" class="form-control" required>
+                            <option value="" disabled selected>Select a student</option>
+                            <option value="Ishan Nethmika">Ishan Nethmika</option>
+                            <option value="Himash Sanjana">Himash Sanjana</option>
+                            <option value="Isuru Madusankha">Isuru Madusankha</option>
+                            <option value="Naveen Tharusha">Naveen Tharusha</option>
+                            <option value="Malidu Hirushan">Malidu Hirushan</option>
+                            <option value="Thikshana Viduranga">Thikshana Viduranga</option>
+                            <option value="Sanjana Prabath">Sanjana Prabath</option>
+                            <option value="Shenal Anuhas">Shenal Anuhas</option>
+                            <option value="Tharaka Prasanna">Tharaka Prasanna</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reportMessage">Report Message</label>
+                        <textarea id="reportMessage" class="form-control" rows="5" placeholder="Write your report details here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Report</button>
+                </form>
             </div>
-
-        </div>
-
-    </div>
-
-    <script>
-        // --- DATA & STATE ---
-        const OWNER_NAME = "Owner";
-        const OWNER_PASS = "own123";
-
-        // Load users from LocalStorage (Simulated Database)
-        let users = JSON.parse(localStorage.getItem('kingSchoolUsers')) || [];
-        
-        let currentUser = null;
-
-        // --- AUTHENTICATION LOGIC ---
-
-        function switchTab(tab) {
-            const loginForm = document.getElementById('loginForm');
-            const regForm = document.getElementById('registerForm');
-            const tabLogin = document.getElementById('tabLogin');
-            const tabRegister = document.getElementById('tabRegister');
-
-            if (tab === 'login') {
-                loginForm.style.display = 'block';
-                regForm.style.display = 'none';
-                tabLogin.classList.add('active');
-                tabRegister.classList.remove('active');
-                clearFeedback();
-            } else {
-                loginForm.style.display = 'none';
-                regForm.style.display = 'block';
-                tabLogin.classList.remove('active');
-                tabRegister.classList.add('active');
-                clearFeedback();
-            }
-        }
-
-        function clearFeedback() {
-            document.getElementById('loginFeedback').textContent = '';
-            document.getElementById('regFeedback').textContent = '';
-            document.getElementById('reportFeedback').textContent = '';
-        }
-
-        // REGISTER
-        document.getElementById('registerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('regName').value.trim();
-            const pass = document.getElementById('regPass').value;
-            const confirm = document.getElementById('regConfirm').value;
-            const feedback = document.getElementById('regFeedback');
-
-            if (pass !== confirm) {
-                feedback.textContent = "Passwords do not match!";
-                feedback.className = "feedback-msg text-error";
-                return;
-            }
-
-            // Check if user exists (case-insensitive)
-            const exists = users.some(u => u.name.toLowerCase() === name.toLowerCase());
-            if (exists) {
-                feedback.textContent = "Username already taken.";
-                feedback.className = "feedback-msg text-error";
-                return;
-            }
-
-            // Save User
-            users.push({ name: name, pass: pass });
-            localStorage.setItem('kingSchoolUsers', JSON.stringify(users));
-
-            feedback.textContent = "Registration Successful! Please Login.";
-            feedback.className = "feedback-msg text-success";
-            
-            // Switch to login after delay
-            setTimeout(() => switchTab('login'), 1500);
-            document.getElementById('registerForm').reset();
-        });
-
-        // LOGIN
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('loginName').value.trim();
-            const pass = document.getElementById('loginPass').value;
-            const feedback = document.getElementById('loginFeedback');
-
-            // 1. Check Hardcoded Owner
-            if (name === OWNER_NAME && pass === OWNER_PASS) {
-                loginSuccess({ name: OWNER_NAME, role: 'Owner' });
-                return;
-            }
-
-            // 2. Check Local Users
-            const user = users.find(u => u.name.toLowerCase() === name.toLowerCase() && u.pass === pass);
-            
-            if (user) {
-                loginSuccess(user);
-            } else {
-                feedback.textContent = "Invalid Name or Password.";
-                feedback.className = "feedback-msg text-error";
-            }
-        });
-
-        function loginSuccess(user) {
-            currentUser = user;
-            document.getElementById('authView').style.display = 'none';
-            document.getElementById('dashboardView').style.display = 'flex';
-            document.getElementById('displayUsername').textContent = `User: ${user.name}`;
-            document.getElementById('logoutBtn').style.display = 'block';
-            
-            // Add system welcome message
-            addMessage('System', `Welcome, ${user.name}. You have entered the Royal Hall.`);
-        }
-
-        function logout() {
-            currentUser = null;
-            document.getElementById('authView').style.display = 'block';
-            document.getElementById('dashboardView').style.display = 'none';
-            document.getElementById('displayUsername').textContent = 'Guest';
-            document.getElementById('logoutBtn').style.display = 'none';
-            document.getElementById('loginForm').reset();
-        }
-
-        // --- CHAT SYSTEM ---
-
-        function handleEnter(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('msgInput');
-            const text = input.value.trim();
-            
-            if (text) {
-                // Add my message
-                addMessage(currentUser.name, text);
-                input.value = '';
-
-                // Simulate a "Bot" or "Other User" reply for Real-time feel
-                // (Since there is no backend, we simulate an echo or reply)
-                if (text.toLowerCase().includes('hello')) {
-                    setTimeout(() => {
-                        addMessage('System', 'Greetings from the King School administration.');
-                    }, 1000);
-                }
-            }
-        }
-
-        function addMessage(sender, text) {
-            const chatWindow = document.getElementById('chatWindow');
-            const msgDiv = document.createElement('div');
-            
-            // Determine styling
-            const isMine = sender === currentUser.name;
-            msgDiv.className = `message ${isMine ? 'mine' : 'others'}`;
-            
-            msgDiv.innerHTML = `
-                <span class="msg-sender">${sender}</span>
-                ${escapeHtml(text)}
-            `;
-
-            chatWindow.appendChild(msgDiv);
-            chatWindow.scrollTop = chatWindow.scrollHeight; // Auto scroll down
-        }
-
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-        }
-
-        // --- REPORT SYSTEM (creds.txt) ---
-
-        function submitReport() {
-            const text = document.getElementById('reportText').value.trim();
-            const feedback = document.getElementById('reportFeedback');
-
-            if (!text) {
-                feedback.textContent = "Please write a report message.";
-                feedback.className = "feedback-msg text-error";
-                return;
-            }
-
-            // Create content for creds.txt
-            const timestamp = new Date().toLocaleString();
-            const content = `=== PROBLEM REPORT ===\nUser: ${currentUser.name}\nTime: ${timestamp}\nMessage: ${text}\n========================\n`;
-
-            // Create Blob
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-
-            // Trigger Download
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'creds.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            feedback.textContent = "Report saved successfully!";
-            feedback.className = "feedback-msg text-success";
-            document.getElementById('reportText').value = '';
-        }
-
-    </script>
-</body>
-</html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 10 - Jayapala School</title>
-    <style>
-        /* --- CSS Variables & Reset --- */
-        :root {
-            --primary-color: #4a6fa5; /* Soft Blue */
-            --secondary-color: #e8f1f2; /* Very Light Blue/Grey */
-            --accent-color: #6a89cc; /* Lighter Blue */
-            --text-dark: #2c3e50;
-            --text-light: #5f6c7b;
-            --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.15);
-            --radius: 12px;
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-family);
-            background-color: var(--secondary-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-            /* Soft background image with overlay */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://picsum.photos/seed/school_env/1920/1080');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 5%;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Hamburger menu for mobile */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-
-        /* --- Layout Containers --- */
-        section {
-            padding: 4rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--accent-color);
-            margin: 0.5rem auto 0;
-            border-radius: 2px;
-        }
-
-        /* --- Home Section --- */
-        .hero {
-            text-align: center;
-            padding: 6rem 1rem;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: var(--radius);
-            margin-top: 2rem;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(5px);
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .hero h2 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .teacher-card {
-            display: inline-block;
-            background: var(--white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary-color);
-            max-width: 500px;
-        }
-
-        .teacher-card h3 {
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .teacher-card p {
-            color: var(--text-light);
-        }
-
-        /* --- Students Section (Grid) --- */
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .student-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .student-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .student-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: var(--secondary-color);
-            margin-bottom: 1rem;
-            object-fit: cover;
-            border: 3px solid var(--accent-color);
-        }
-
-        .student-name {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .student-desc {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            font-style: italic;
-        }
-
-        /* Specific color tweaks based on sentiment if needed, kept neutral for now */
-
-        /* --- Report Section --- */
-        .report-container {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            font-family: var(--font-family);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn-submit:hover {
-            background-color: var(--accent-color);
-        }
-
-        /* --- About Section --- */
-        .about-card {
-            background: var(--white);
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 2.5rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .creator-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-            background-color: #eee; /* Fallback */
-            object-fit: cover;
-        }
-
-        .contact-link {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.6rem 1.2rem;
-            background-color: #0088cc; /* Telegram Color */
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: opacity 0.3s;
-        }
-
-        .contact-link:hover {
-            opacity: 0.9;
-        }
-
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background-color: var(--text-dark);
-            color: var(--white);
-            margin-top: 3rem;
-        }
-
-        /* --- Custom Toast Notification --- */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #27ae60; /* Green for success */
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1001;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            font-size: 17px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            opacity: 0;
-            transition: opacity 0.5s, bottom 0.5s;
-        }
-
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-                padding-top: 1rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero h2 {
-                font-size: 1.4rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">Jayapala School</a>
-            <div class="hamburger" id="hamburger">
-                &#9776; <!-- Hamburger Icon -->
-            </div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#students">Class Info</a></li>
-                <li><a href="#report">Report</a></li>
-                <li><a href="#about">Credit</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Home Section -->
-    <header id="home">
-        <div class="hero">
-            <h1>Jayapala School</h1>
-            <h2>Karukkuliya - Grade 10</h2>
-            
-            <div class="teacher-card">
-                <h3>Class Teacher</h3>
-                <p><strong>M.R.S. Pavithra Hirushini</strong></p>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Dedicated to guiding students towards a bright future.</p>
-            </div>
-        </div>
-    </header>
-
-    <!-- Students Section -->
-    <section id="students">
-        <h2 class="section-title">Our Class</h2>
-        <div class="students-grid">
-            
-            <!-- Card 1 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/ishan/150/150" alt="Ishan" class="student-avatar">
-                <h3 class="student-name">Ishan Nethmika</h3>
-                <p class="student-desc">A kind child, but his studies have been affected due to romantic relationships.</p>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/himash/150/150" alt="Himash" class="student-avatar">
-                <h3 class="student-name">Himash Sanjana</h3>
-                <p class="student-desc">Has shown poor school attendance in recent years.</p>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/isuru/150/150" alt="Isuru" class="student-avatar">
-                <h3 class="student-name">Isuru Madusankha</h3>
-                <p class="student-desc">Studies with great enthusiasm.</p>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/naveen/150/150" alt="Naveen" class="student-avatar">
-                <h3 class="student-name">Naveen Tharusha</h3>
-                <p class="student-desc">Very intelligent; scored 153 marks in the scholarship examination.</p>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/malidu/150/150" alt="Malidu" class="student-avatar">
-                <h3 class="student-name">Malidu Hirushan</h3>
-                <p class="student-desc">Very diligent in his studies.</p>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/thikshana/150/150" alt="Thikshana" class="student-avatar">
-                <h3 class="student-name">Thikshana Viduranga</h3>
-                <p class="student-desc">Can overcome life due to his passion. Good luck!</p>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/sanjana/150/150" alt="Sanjana" class="student-avatar">
-                <h3 class="student-name">Sanjana Prabath</h3>
-                <p class="student-desc">Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</p>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="student-avatar">
-                <h3 class="student-name">Shenal Anuhas</h3>
-                <p class="student-desc">Website creator; personal information intentionally not included.</p>
-            </div>
-
-            <!-- Card 9 -->
-            <div class="student-card">
-                <img src="https://picsum.photos/seed/tharaka/150/150" alt="Tharaka" class="student-avatar">
-                <h3 class="student-name">Tharaka Prasanna</h3>
-                <p class="student-desc">Information intentionally not disclosed.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Report Sending Page -->
-    <section id="report">
-        <h2 class="section-title">Send a Report</h2>
-        <div class="report-container">
-            <form id="reportForm">
-                <div class="form-group">
-                    <label for="senderName">Sender Name</label>
-                    <input type="text" id="senderName" class="form-control" placeholder="Enter your name" required>
-                </div>
+        </section>
+
+        <!-- ABOUT / CREDIT VIEW -->
+        <section id="about" class="view">
+            <div class="credit-card">
+                <img src="https://picsum.photos/seed/crypto/200/200" alt="Creator" class="credit-avatar">
+                <h2 style="color: var(--primary-dark);">Shenal Anuhas</h2>
+                <p style="color: var(--secondary-color); font-weight: 500;">Web Developer</p>
                 
-                <div class="form-group">
-                    <label for="studentName">Student Name</label>
-                    <select id="studentName" class="form-control" required>
-                        <option value="" disabled selected>Select a student...</option>
-                        <option value="Ishan Nethmika">Ishan Nethmika</option>
-                        <option value="Himash Sanjana">Himash Sanjana</option>
-                        <option value="Isuru Madusankha">Isuru Madusankha</option>
-                        <option value="Naveen Tharusha">Naveen Tharusha</option>
-                        <option value="Malidu Hirushan">Malidu Hirushan</option>
-                        <option value="Thikshana Viduranga">Thikshana Viduranga</option>
-                        <option value="Sanjana Prabath">Sanjana Prabath</option>
-                        <option value="Shenal Anuhas">Shenal Anuhas</option>
-                        <option value="Tharaka Prasanna">Tharaka Prasanna</option>
-                    </select>
+                <div class="credit-details">
+                    <p><strong>Age:</strong> 15+</p>
+                    <p><strong>Project:</strong> Grade 10 Class Website</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="reportMessage">Report Message</label>
-                    <textarea id="reportMessage" class="form-control" placeholder="Type your report details here..." required></textarea>
+                <p style="margin-bottom: 1.5rem;">Feel free to contact me for projects or inquiries.</p>
+                
+                <a href="https://t.me/Crypto_RIV" target="_blank" class="telegram-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.086 1.862.743 2.31.475.328 1.907 1.07 3.655 2.024.956.515 1.66.896 2.34 1.26.526.288 1.01.553 1.487.815.933.507 2.093 1.138 2.924 1.138.832 0 1.991-.631 2.925-1.139.475-.26.96-.525 1.486-.813.68-.365 1.385-.746 2.34-1.261 1.748-.954 3.18-1.696 3.655-2.024.657-.448 1.471-1.342.743-2.31-.483-.569-1.053-.754-1.473-.901-.535-.188-1.906-.717-2.85-1.09L3.22 2.648a2.253 2.253 0 0 0-1.022-.215z"/></svg>
+                    Contact on Telegram
+                </a>
+            </div>
+        </section>
+
+        <!-- AUTH VIEW (LOGIN / REGISTER) -->
+        <section id="auth" class="view">
+            <div class="auth-wrapper">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="switchAuth('login')">Login</div>
+                    <div class="auth-tab" onclick="switchAuth('register')">Register</div>
                 </div>
 
-                <button type="submit" class="btn-submit">Submit Report</button>
-            </form>
-        </div>
-    </section>
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active" onsubmit="handleAuth(event, 'Login')">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" required placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
 
-    <!-- About / Credit Page -->
-    <section id="about">
-        <h2 class="section-title">Credits</h2>
-        <div class="about-card">
-            <img src="https://picsum.photos/seed/crypto/200/200" alt="Shenal Anuhas" class="creator-img">
-            <h3>Shenal Anuhas</h3>
-            <p style="color: var(--text-light); margin-bottom: 0.5rem;">Age: 15+</p>
-            <p>Developer & Designer</p>
-            <a href="https://t.me/Crypto_RIV" target="_blank" class="contact-link">Contact on Telegram</a>
-        </div>
-    </section>
+                <!-- Register Form -->
+                <form id="registerForm" class="auth-form" onsubmit="handleAuth(event, 'Registration')">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" required placeholder="Full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" required placeholder="Choose username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" required placeholder="Create password">
+                    </div>
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Jayapala School, Karukkuliya. All Rights Reserved.</p>
+        <p>&copy; 2023 Jayapala School, Karukkuliya. Grade 10 Class.</p>
     </footer>
 
-    <!-- Custom Toast Notification Element -->
-    <div id="toast">Report Sent Successfully!</div>
+    <!-- Toast Notification Element -->
+    <div id="toast">Message</div>
 
+    <!-- JavaScript -->
     <script>
-        // --- Mobile Navigation Toggle ---
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('nav-links');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when a link is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+        // --- Navigation Logic ---
+        function switchView(viewId) {
+            // Hide all views
+            const views = document.querySelectorAll('.view');
+            views.forEach(view => {
+                view.classList.remove('active');
             });
-        });
 
-        // --- Report Form Handling ---
-        const reportForm = document.getElementById('reportForm');
-        const toast = document.getElementById('toast');
+            // Show selected view
+            document.getElementById(viewId).classList.add('active');
 
-        reportForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent actual page reload
+            // Update Nav Link Active State
+            const links = document.querySelectorAll('nav a');
+            links.forEach(link => {
+                link.classList.remove('active');
+                // Check if the link text roughly matches the viewId or contains it
+                if (link.getAttribute('onclick').includes(viewId)) {
+                    link.classList.add('active');
+                }
+            });
 
-            // Get values (for potential backend use later)
+            // Close mobile menu if open
+            const navUl = document.getElementById('nav-links');
+            if (navUl.classList.contains('show')) {
+                navUl.classList.remove('show');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0,0);
+        }
+
+        function toggleMenu() {
+            const navUl = document.getElementById('nav-links');
+            navUl.classList.toggle('show');
+        }
+
+        // --- Auth Logic (Visual Only) ---
+        function switchAuth(type) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabs = document.querySelectorAll('.auth-tab');
+
+            if (type === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+            } else {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+                tabs[0].classList.remove('active');
+                tabs[1].classList.add('active');
+            }
+        }
+
+        function handleAuth(event, type) {
+            event.preventDefault();
+            // Simulate backend call
+            showToast(`${type} successful! Welcome to Grade 10.`, 'success');
+            // Clear inputs
+            event.target.reset();
+            // Redirect to home after short delay
+            setTimeout(() => {
+                switchView('home');
+            }, 1500);
+        }
+
+        // --- Report Form Logic ---
+        function handleReportSubmit(event) {
+            event.preventDefault();
+            
             const sender = document.getElementById('senderName').value;
             const student = document.getElementById('studentName').value;
             const message = document.getElementById('reportMessage').value;
 
-            // Simple validation check (HTML 'required' attribute handles most)
+            // Simple validation check (HTML5 required handles most)
             if(sender && student && message) {
-                // Show success alert/toast
-                showToast();
-                
-                // Reset form
-                reportForm.reset();
+                showToast(`Report sent for ${student} successfully!`, 'success');
+                document.getElementById('reportForm').reset();
+            } else {
+                showToast('Please fill in all fields.', 'error');
             }
-        });
+        }
 
-        // Function to show the toast notification
-        function showToast() {
-            toast.className = "show";
+        // --- Toast Notification System ---
+        function showToast(message, type) {
+            const toast = document.getElementById("toast");
+            toast.className = "show"; // Add show class
+            if (type === 'success') {
+                toast.classList.add('success');
+            } else if (type === 'error') {
+                toast.classList.add('error');
+            }
+            
+            toast.innerText = message;
+
+            // Hide after 3 seconds
             setTimeout(function(){ 
                 toast.className = toast.className.replace("show", ""); 
-            }, 3000); // Hide after 3 seconds
+                // Remove type classes after hiding
+                setTimeout(() => {
+                    toast.classList.remove('success', 'error');
+                }, 500);
+            }, 3000);
         }
     </script>
 </body>
