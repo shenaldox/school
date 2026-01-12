@@ -1,918 +1,484 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 10 - Jayapala School, Karukkuliya</title>
+    <title>Grade 10 - Jayapala School</title>
     <style>
-        /* Previous CSS styles + new styles */
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --primary-color: #4a6fa5; /* Soft Blue */
+            --secondary-color: #e8f1f2; /* Very Light Blue/Grey */
+            --accent-color: #6a89cc; /* Lighter Blue */
+            --text-dark: #2c3e50;
+            --text-light: #5f6c7b;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-family);
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
             line-height: 1.6;
-            color: #333;
-            background-image: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
-            min-height: 100vh;
+            /* Soft background image with overlay */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://picsum.photos/seed/school_env/1920/1080');
             background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            color: #2c3e50;
-            padding: 1rem 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        /* --- Navigation --- */
+        nav {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 1rem 5%;
         }
 
-        .header-content {
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
 
-        nav {
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
             display: flex;
             gap: 2rem;
-            flex-wrap: wrap;
         }
 
-        nav a {
-            color: #2c3e50;
+        .nav-links a {
             text-decoration: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
         }
 
-        nav a:hover, nav a.active {
-            background: rgba(41, 128, 185, 0.15);
-            color: #2980b9;
-            transform: translateY(-2px);
+        .nav-links a:hover {
+            color: var(--primary-color);
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .username {
-            color: #1565c0;
-            font-weight: 500;
-        }
-
-        .logout-btn {
-            background: rgba(231, 76, 60, 0.8);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: rgba(192, 57, 43, 0.9);
-        }
-
-        .section {
+        /* Hamburger menu for mobile */
+        .hamburger {
             display: none;
-            animation: fadeIn 0.5s ease-in;
+            cursor: pointer;
+            font-size: 1.5rem;
         }
 
-        .section.active {
-            display: block;
+        /* --- Layout Containers --- */
+        section {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Auth Forms */
-        .auth-container {
-            max-width: 400px;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-            backdrop-filter: blur(4px);
-        }
-
-        .auth-tabs {
-            display: flex;
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
             margin-bottom: 2rem;
-            border-radius: 25px;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.05);
+            position: relative;
         }
 
-        .auth-tab {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .auth-tab.active {
-            background: rgba(41, 128, 185, 0.2);
-            color: #1565c0;
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
+        .section-title::after {
+            content: '';
             display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
         }
 
-        /* Chat Room Styles */
-        .chat-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-            height: 600px;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(4px);
-        }
-
-        .chat-header {
-            padding: 1rem;
-            background: rgba(21, 101, 192, 0.1);
-            border-radius: 15px 15px 0 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 0.8rem 1.2rem;
-            border-radius: 18px;
-            max-width: 70%;
-            word-wrap: break-word;
-            animation: slideInUp 0.3s ease-out;
-        }
-
-        .message.sent {
-            background: rgba(21, 101, 192, 0.8);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
-        }
-
-        .message.received {
-            background: rgba(0, 0, 0, 0.05);
-            color: #333;
-            margin-right: auto;
-            border-bottom-left-radius: 4px;
-        }
-
-        .message-header {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            margin-bottom: 0.3rem;
-        }
-
-        .chat-input-container {
-            padding: 1rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 0.8rem;
-            border: 2px solid rgba(21, 101, 192, 0.2);
-            border-radius: 25px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .chat-input:focus {
-            border-color: #1565c0;
-            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
-        }
-
-        .send-btn {
-            background: linear-gradient(135deg, #1565c0, #5d99c6);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .send-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
-        }
-
-        /* Previous styles for other sections */
+        /* --- Home Section --- */
         .hero {
             text-align: center;
-            padding: 3rem 0;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-            backdrop-filter: blur(4px);
+            padding: 6rem 1rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(5px);
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            color: #1565c0;
-            margin-bottom: 0.5rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
         }
 
         .hero h2 {
-            font-size: 1.5rem;
-            color: #5d99c6;
-            font-weight: 400;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
         }
 
-        .teacher-info, .students-grid, .report-form, .about-content {
-            /* Previous styles remain the same */
+        .teacher-card {
+            display: inline-block;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+            max-width: 500px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            nav {
-                gap: 1rem;
-            }
-
-            .chat-container {
-                height: 500px;
-                margin: 10px;
-            }
-
-            .message {
-                max-width: 85%;
-            }
+        .teacher-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
         }
 
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
+        .teacher-card p {
+            color: var(--text-light);
         }
 
-        .text-center {
+        /* --- Students Section (Grid) --- */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .student-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
         }
 
-        .mb-2 {
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
             margin-bottom: 1rem;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <nav>
-                <a href="#" onclick="showSection('home')" class="active">Home</a>
-                <a href="#" onclick="showSection('students')">Students</a>
-                <a href="#" onclick="showSection('chat')">Chat Room</a>
-                <a href="#" onclick="showSection('report')">Send Report</a>
-                <a href="#" onclick="showSection('about')">About</a>
-            </nav>
-            <div class="user-info hidden" id="userInfo">
-                <span class="username" id="usernameDisplay"></span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <!-- Login/Register Section -->
-        <section id="auth" class="section active">
-            <div class="auth-container">
-                <div class="auth-tabs">
-                    <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
-                    <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
-                </div>
-                
-                <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
-                    <div class="form-group">
-                        <label for="loginUsername">Username</label>
-                        <input type="text" id="loginUsername" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn">Login</button>
-                </form>
-
-                <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
-                    <div class="form-group">
-                        <label for="registerUsername">Username</label>
-                        <input type="text" id="registerUsername" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" id="registerPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" required>
-                    </div>
-                    <button type="submit" class="btn">Register</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Home Section -->
-        <section id="home" class="section">
-            <div class="hero">
-                <h1>Jayapala School, Karukkuliya</h1>
-                <h2>Grade 10 Class Information</h2>
-            </div>
-            
-            <div class="teacher-info">
-                <h3>Class Teacher Details</h3>
-                <p><strong>Name:</strong> M.R.S. Pavithra Hirushini</p>
-                <p>Our dedicated class teacher who guides and supports us throughout our academic journey.</p>
-            </div>
-        </section>
-
-        <!-- Students Section -->
-        <section id="students" class="section">
-            <div class="hero">
-                <h2>Students Information</h2>
-            </div>
-            
-            <div class="students-grid" id="studentsGrid">
-                <!-- Student cards will be dynamically generated -->
-            </div>
-        </section>
-
-        <!-- Chat Room Section -->
-        <section id="chat" class="section">
-            <div class="hero">
-                <h2>Class Chat Room</h2>
-                <p>Connect with your classmates and teacher</p>
-            </div>
-            
-            <div class="chat-container">
-                <div class="chat-header">
-                    <h3>Grade 10 Chat</h3>
-                    <p class="text-center">Welcome, <span id="chatUsername"></span>!</p>
-                </div>
-                
-                <div class="chat-messages" id="chatMessages">
-                    <!-- Messages will be dynamically added here -->
-                </div>
-                
-                <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." maxlength="500">
-                    <button class="send-btn" onclick="sendMessage()">Send</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Report Section -->
-        <section id="report" class="section">
-            <div class="hero">
-                <h2>Send Report</h2>
-            </div>
-            
-            <form class="report-form" onsubmit="handleReportSubmit(event)">
-                <div class="form-group">
-                    <label for="senderName">Sender Name</label>
-                    <input type="text" id="senderName" name="senderName" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="studentName">Student Name</label>
-                    <select id="studentName" name="studentName" required>
-                        <option value="">Select a student</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="reportMessage">Report Message</label>
-                    <textarea id="reportMessage" name="reportMessage" required></textarea>
-                </div>
-                
-                <button type="submit" class="btn">Send Report</button>
-            </form>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="hero">
-                <h2>About / Credit</h2>
-            </div>
-            
-            <div class="about-content">
-                <h3>Website Creator</h3>
-                <p><strong>Name:</strong> Shenal Anuhas</p>
-                <p><strong>Age:</strong> 15+</p>
-                <p><strong>Role:</strong> Website Developer</p>
-                <p>This website was created as a class project for Grade 10 Jayapala School.</p>
-                <a href="https://t.me/Crypto_RIV" class="telegram-link" target="_blank">Contact on Telegram</a>
-            </div>
-        </section>
-    </div>
-
-    <script>
-        // Global variables
-        let currentUser = null;
-        let students = [
-            { name: "Ishan Nethmika", description: "A kind child, but his studies have been affected due to romantic relationships." },
-            { name: "Himash Sanjana", description: "Has shown poor school attendance in recent years." },
-            { name: "Isuru Madusankha", description: "Studies with great enthusiasm." },
-            { name: "Naveen Tharusha", description: "Very intelligent; scored 153 marks in the scholarship examination." },
-            { name: "Malidu Hirushan", description: "Very diligent in his studies." },
-            { name: "Thikshana Viduranga", description: "Can overcome life due to his passion. Good luck message included." },
-            { name: "Sanjana Prabath", description: "Previously good in studies, but now neglecting them due to addiction to the game Free Fire." },
-            { name: "Shenal Anuhas", description: "Website creator; personal information intentionally not included." },
-            { name: "Tharaka Prasanna", description: "Information intentionally not disclosed." }
-        ];
-
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuthStatus();
-            loadStudents();
-            loadChatMessages();
-        });
-
-        // Authentication functions
-        function checkAuthStatus() {
-            const user = localStorage.getItem('currentUser');
-            if (user) {
-                currentUser = JSON.parse(user);
-                showMainApp();
-            } else {
-                showAuthSection();
-            }
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
         }
 
-        function showAuthSection() {
-            document.getElementById('auth').classList.add('active');
-            document.getElementById('home').classList.remove('active');
-            document.getElementById('userInfo').classList.add('hidden');
+        .student-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
         }
 
-        function showMainApp() {
-            document.getElementById('auth').classList.remove('active');
-            document.getElementById('home').classList.add('active');
-            document.getElementById('userInfo').classList.remove('hidden');
-            document.getElementById('usernameDisplay').textContent = currentUser.username;
-            document.getElementById('chatUsername').textContent = currentUser.username;
+        .student-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-style: italic;
         }
 
-        function switchAuthTab(tab) {
-            const tabs = document.querySelectorAll('.auth-tab');
-            const forms = document.querySelectorAll('.auth-form');
-            
-            tabs.forEach(t => t.classList.remove('active'));
-            forms.forEach(f => f.classList.remove('active'));
-            
-            if (tab === 'login') {
-                tabs[0].classList.add('active');
-                document.getElementById('loginForm').classList.add('active');
-            } else {
-                tabs[1].classList.add('active');
-                document.getElementById('registerForm').classList.add('active');
-            }
+        /* Specific color tweaks based on sentiment if needed, kept neutral for now */
+
+        /* --- Report Section --- */
+        .report-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        function handleRegister(event) {
-            event.preventDefault();
-            
-            const username = document.getElementById('registerUsername').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-            
-            // Check if user already exists
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            if (users.find(u => u.username === username)) {
-                alert('Username already exists!');
-                return;
-            }
-            
-            // Create new user
-            const newUser = { username, email, password, id: Date.now() };
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-            
-            alert('Registration successful! Please login.');
-            event.target.reset();
-            switchAuthTab('login');
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => u.username === username && u.password === password);
-            
-            if (user) {
-                currentUser = user;
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                showMainApp();
-                event.target.reset();
-            } else {
-                alert('Invalid username or password!');
-            }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            showAuthSection();
-        }
-
-        // Navigation functions
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            const selectedSection = document.getElementById(sectionId);
-            if (selectedSection) {
-                selectedSection.classList.add('active');
-            }
-            
-            const navLinks = document.querySelectorAll('nav a');
-            navLinks.forEach(link => link.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        // Students functions
-        function loadStudents() {
-            const studentsGrid = document.getElementById('studentsGrid');
-            const studentNameSelect = document.getElementById('studentName');
-            
-            studentsGrid.innerHTML = '';
-            studentNameSelect.innerHTML = '<option value="">Select a student</option>';
-            
-            students.forEach(student => {
-                // Create student card
-                const card = document.createElement('div');
-                card.className = 'student-card';
-                card.innerHTML = `
-                    <h4>${student.name}</h4>
-                    <p>${student.description}</p>
-                `;
-                studentsGrid.appendChild(card);
-                
-                // Add to select dropdown
-                const option = document.createElement('option');
-                option.value = student.name;
-                option.textContent = student.name;
-                studentNameSelect.appendChild(option);
-            });
-        }
-
-        // Report function
-        function handleReportSubmit(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const senderName = formData.get('senderName');
-            const studentName = formData.get('studentName');
-            const reportMessage = formData.get('reportMessage');
-            
-            alert(`Report sent successfully!\n\nFrom: ${senderName}\nFor: ${studentName}\nMessage: ${reportMessage}`);
-            event.target.reset();
-        }
-
-        // Chat functions
-        function loadChatMessages() {
-            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-            const chatMessages = document.getElementById('chatMessages');
-            
-            chatMessages.innerHTML = '';
-            messages.forEach(message => {
-                displayMessage(message);
-            });
-            
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function displayMessage(message) {
-            const chatMessages = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${message.userId === currentUser?.id ? 'sent' : 'received'}`;
-            messageDiv.innerHTML = `
-                <div class="message-header">${message.username} • ${new Date(message.timestamp).toLocaleTimeString()}</div>
-                <div>${message.text}</div>
-            `;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function sendMessage() {
-            const chatInput = document.getElementById('chatInput');
-            const text = chatInput.value.trim();
-            
-            if (!text || !currentUser) return;
-            
-            const message = {
-                id: Date.now(),
-                userId: currentUser.id,
-                username: currentUser.username,
-                text: text,
-                timestamp: new Date().toISOString()
-            };
-            
-            // Save to localStorage
-            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-            messages.push(message);
-            localStorage.setItem('chatMessages', JSON.stringify(messages));
-            
-            // Display message
-            displayMessage(message);
-            
-            // Clear input
-            chatInput.value = '';
-        }
-
-        // Allow sending message with Enter key
-        document.addEventListener('DOMContentLoaded', function() {
-            const chatInput = document.getElementById('chatInput');
-            if (chatInput) {
-                chatInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        sendMessage();
-                    }
-                });
-            }
-        });
-    </script>
-</body>
-</html>
-``` <style>
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-control {
             width: 100%;
             padding: 0.8rem;
-            border: 2px solid rgba(21, 101, 192, 0.2);
+            border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.7);
+            transition: border-color 0.3s;
+            font-family: var(--font-family);
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-control:focus {
             outline: none;
-            border-color: #1565c0;
-            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+            border-color: var(--primary-color);
         }
 
-        .form-group textarea {
+        textarea.form-control {
             resize: vertical;
             min-height: 120px;
         }
 
-        .btn {
-            background: linear-gradient(135deg, #1565c0, #5d99c6);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .btn-submit {
             width: 100%;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.2);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.3);
-        }
-
-        .about-content {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .about-content h3 {
-            color: #1565c0;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-
-        .about-content p {
-            color: #37474f;
-            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
             font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .telegram-link {
+        .btn-submit:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* --- About Section --- */
+        .about-card {
+            background: var(--white);
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .creator-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background-color: #eee; /* Fallback */
+            object-fit: cover;
+        }
+
+        .contact-link {
             display: inline-block;
-            background: linear-gradient(135deg, #0088cc, #229ed9);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            transition: all 0.3s ease;
             margin-top: 1rem;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.2);
+            padding: 0.6rem 1.2rem;
+            background-color: #0088cc; /* Telegram Color */
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: opacity 0.3s;
         }
 
-        .telegram-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
+        .contact-link:hover {
+            opacity: 0.9;
         }
 
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--text-dark);
+            color: var(--white);
+            margin-top: 3rem;
+        }
+
+        /* --- Custom Toast Notification --- */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #27ae60; /* Green for success */
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1001;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 17px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+        /* --- Responsive Design --- */
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                padding-top: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .hero h2 {
-                font-size: 1.2rem;
-            }
-            
-            nav {
-                gap: 1rem;
-            }
-            
-            nav a {
-                padding: 0.4rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .students-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .report-form,
-            .about-content {
-                padding: 2rem;
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#" onclick="showSection('home')" class="active">Home / Class Info</a>
-            <a href="#" onclick="showSection('students')">Students</a>
-            <a href="#" onclick="showSection('report')">Send Report</a>
-            <a href="#" onclick="showSection('about')">About</a>
-        </nav>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Jayapala School</a>
+            <div class="hamburger" id="hamburger">
+                &#9776; <!-- Hamburger Icon -->
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#students">Class Info</a></li>
+                <li><a href="#report">Report</a></li>
+                <li><a href="#about">Credit</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <header id="home">
+        <div class="hero">
+            <h1>Jayapala School</h1>
+            <h2>Karukkuliya - Grade 10</h2>
+            
+            <div class="teacher-card">
+                <h3>Class Teacher</h3>
+                <p><strong>M.R.S. Pavithra Hirushini</strong></p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Dedicated to guiding students towards a bright future.</p>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <!-- Home Section -->
-        <section id="home" class="section active">
-            <div class="hero">
-                <h1>Jayapala School, Karukkuliya</h1>
-                <h2>Grade 10 Class Information</h2>
-            </div>
+    <!-- Students Section -->
+    <section id="students">
+        <h2 class="section-title">Our Class</h2>
+        <div class="students-grid">
             
-            <div class="teacher-info">
-                <h3>Class Teacher Details</h3>
-                <p><strong>Name:</strong> M.R.S. Pavithra Hirushini</p>
-                <p>Our dedicated class teacher who guides and supports us throughout our academic journey.</p>
+            <!-- Card 1 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/ishan/150/150" alt="Ishan" class="student-avatar">
+                <h3 class="student-name">Ishan Nethmika</h3>
+                <p class="student-desc">A kind child, but his studies have been affected due to romantic relationships.</p>
             </div>
-        </section>
 
-        <!-- Students Section -->
-        <section id="students" class="section">
-            <div class="hero">
-                <h2>Students Information</h2>
+            <!-- Card 2 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/himash/150/150" alt="Himash" class="student-avatar">
+                <h3 class="student-name">Himash Sanjana</h3>
+                <p class="student-desc">Has shown poor school attendance in recent years.</p>
             </div>
-            
-            <div class="students-grid">
-                <div class="student-card">
-                    <h4>Ishan Nethmika</h4>
-                    <p>A kind child, but his studies have been affected due to romantic relationships.</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Himash Sanjana</h4>
-                    <p>Has shown poor school attendance in recent years.</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Isuru Madusankha</h4>
-                    <p>Studies with great enthusiasm.</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Naveen Tharusha</h4>
-                    <p>Very intelligent; scored 153 marks in the scholarship examination.</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Malidu Hirushan</h4>
-                    <p>Very diligent in his studies.</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Thikshana Viduranga</h4>
-                    <p>Can overcome life due to his passion. Good luck for your future endeavors!</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Sanjana Prabath</h4>
-                    <p>Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Shenal Anuhas</h4>
-                    <p>Website creator; personal information intentionally not included.</p>
-                </div>
-                
-                <div class="student-card">
-                    <h4>Tharaka Prasanna</h4>
-                    <p>Information intentionally not disclosed.</p>
-                </div>
-            </div>
-        </section>
 
-        <!-- Report Section -->
-        <section id="report" class="section">
-            <div class="hero">
-                <h2>Send Report</h2>
+            <!-- Card 3 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/isuru/150/150" alt="Isuru" class="student-avatar">
+                <h3 class="student-name">Isuru Madusankha</h3>
+                <p class="student-desc">Studies with great enthusiasm.</p>
             </div>
-            
-            <form class="report-form" onsubmit="handleReportSubmit(event)">
+
+            <!-- Card 4 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/naveen/150/150" alt="Naveen" class="student-avatar">
+                <h3 class="student-name">Naveen Tharusha</h3>
+                <p class="student-desc">Very intelligent; scored 153 marks in the scholarship examination.</p>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/malidu/150/150" alt="Malidu" class="student-avatar">
+                <h3 class="student-name">Malidu Hirushan</h3>
+                <p class="student-desc">Very diligent in his studies.</p>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/thikshana/150/150" alt="Thikshana" class="student-avatar">
+                <h3 class="student-name">Thikshana Viduranga</h3>
+                <p class="student-desc">Can overcome life due to his passion. Good luck!</p>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/sanjana/150/150" alt="Sanjana" class="student-avatar">
+                <h3 class="student-name">Sanjana Prabath</h3>
+                <p class="student-desc">Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</p>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="student-avatar">
+                <h3 class="student-name">Shenal Anuhas</h3>
+                <p class="student-desc">Website creator; personal information intentionally not included.</p>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="student-card">
+                <img src="https://picsum.photos/seed/tharaka/150/150" alt="Tharaka" class="student-avatar">
+                <h3 class="student-name">Tharaka Prasanna</h3>
+                <p class="student-desc">Information intentionally not disclosed.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Report Sending Page -->
+    <section id="report">
+        <h2 class="section-title">Send a Report</h2>
+        <div class="report-container">
+            <form id="reportForm">
                 <div class="form-group">
                     <label for="senderName">Sender Name</label>
-                    <input type="text" id="senderName" name="senderName" required>
+                    <input type="text" id="senderName" class="form-control" placeholder="Enter your name" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="studentName">Student Name</label>
-                    <select id="studentName" name="studentName" required>
-                        <option value="">Select a student</option>
+                    <select id="studentName" class="form-control" required>
+                        <option value="" disabled selected>Select a student...</option>
                         <option value="Ishan Nethmika">Ishan Nethmika</option>
                         <option value="Himash Sanjana">Himash Sanjana</option>
                         <option value="Isuru Madusankha">Isuru Madusankha</option>
@@ -924,437 +490,82 @@
                         <option value="Tharaka Prasanna">Tharaka Prasanna</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="reportMessage">Report Message</label>
-                    <textarea id="reportMessage" name="reportMessage" required></textarea>
+                    <textarea id="reportMessage" class="form-control" placeholder="Type your report details here..." required></textarea>
                 </div>
-                
-                <button type="submit" class="btn">Send Report</button>
-            </form>
-        </section>
 
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="hero">
-                <h2>About / Credit</h2>
-            </div>
-            
-            <div class="about-content">
-                <h3>Website Creator</h3>
-                <p><strong>Name:</strong> Shenal Anuhas</p>
-                <p><strong>Age:</strong> 15+</p>
-                <p><strong>Role:</strong> Website Developer</p>
-                <p>This website was created as a class project for Grade 10 Jayapala School.</p>
-                <a href="https://t.me/Crypto_RIV" class="telegram-link" target="_blank">Contact on Telegram</a>
-            </div>
-        </section>
-    </div>
+                <button type="submit" class="btn-submit">Submit Report</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- About / Credit Page -->
+    <section id="about">
+        <h2 class="section-title">Credits</h2>
+        <div class="about-card">
+            <img src="https://picsum.photos/seed/crypto/200/200" alt="Shenal Anuhas" class="creator-img">
+            <h3>Shenal Anuhas</h3>
+            <p style="color: var(--text-light); margin-bottom: 0.5rem;">Age: 15+</p>
+            <p>Developer & Designer</p>
+            <a href="https://t.me/Crypto_RIV" target="_blank" class="contact-link">Contact on Telegram</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Jayapala School, Karukkuliya. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Custom Toast Notification Element -->
+    <div id="toast">Report Sent Successfully!</div>
 
     <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show selected section
-            const selectedSection = document.getElementById(sectionId);
-            if (selectedSection) {
-                selectedSection.classList.add('active');
-            }
-            
-            // Update active nav link
-            const navLinks = document.querySelectorAll('nav a');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
+        // --- Mobile Navigation Toggle ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
 
-        function handleReportSubmit(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const senderName = formData.get('senderName');
-            const studentName = formData.get('studentName');
-            const reportMessage = formData.get('reportMessage');
-            
-            // Show success alert
-            alert(`Report sent successfully!\n\nFrom: ${senderName}\nFor: ${studentName}\nMessage: ${reportMessage}`);
-            
-            // Reset form
-            event.target.reset();
-        }
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
 
-        // Add smooth scrolling behavior
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
             });
         });
+
+        // --- Report Form Handling ---
+        const reportForm = document.getElementById('reportForm');
+        const toast = document.getElementById('toast');
+
+        reportForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent actual page reload
+
+            // Get values (for potential backend use later)
+            const sender = document.getElementById('senderName').value;
+            const student = document.getElementById('studentName').value;
+            const message = document.getElementById('reportMessage').value;
+
+            // Simple validation check (HTML 'required' attribute handles most)
+            if(sender && student && message) {
+                // Show success alert/toast
+                showToast();
+                
+                // Reset form
+                reportForm.reset();
+            }
+        });
+
+        // Function to show the toast notification
+        function showToast() {
+            toast.className = "show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000); // Hide after 3 seconds
+        }
     </script>
-    <style>```css
-/* Jayapala School - Grade 10 Website Styles */
-
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-image: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
-    min-height: 100vh;
-    background-attachment: fixed;
-}
-
-/* Container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Header and Navigation */
-header {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #2c3e50;
-    padding: 1rem 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-nav a {
-    color: #2c3e50;
-    text-decoration: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.7);
-    font-weight: 500;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-nav a:hover, nav a.active {
-    background: rgba(41, 128, 185, 0.15);
-    color: #2980b9;
-    transform: translateY(-2px);
-}
-
-/* Sections */
-.section {
-    display: none;
-    animation: fadeIn 0.5s ease-in;
-}
-
-.section.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Hero Section */
-.hero {
-    text-align: center;
-    padding: 3rem 0;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.hero h1 {
-    font-size: 2.5rem;
-    color: #1565c0;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.hero h2 {
-    font-size: 1.5rem;
-    color: #5d99c6;
-    font-weight: 400;
-}
-
-/* Teacher Info */
-.teacher-info {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-    text-align: center;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.teacher-info h3 {
-    color: #1565c0;
-    margin-bottom: 1rem;
-    font-size: 1.8rem;
-}
-
-/* Students Grid */
-.students-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.student-card {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.student-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
-    background: rgba(255, 255, 255, 0.95);
-}
-
-.student-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, #64b5f6, #90caf9);
-}
-
-.student-card h4 {
-    color: #0d47a1;
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-}
-
-.student-card p {
-    color: #37474f;
-    line-height: 1.8;
-}
-
-/* Report Form */
-.report-form {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 3rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #1565c0;
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid rgba(21, 101, 192, 0.2);
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.7);
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #1565c0;
-    box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-/* Buttons */
-.btn {
-    background: linear-gradient(135deg, #1565c0, #5d99c6);
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(21, 101, 192, 0.2);
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(21, 101, 192, 0.3);
-}
-
-/* About Section */
-.about-content {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 3rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.about-content h3 {
-    color: #1565c0;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-}
-
-.about-content p {
-    color: #37474f;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-}
-
-.telegram-link {
-    display: inline-block;
-    background: linear-gradient(135deg, #0088cc, #229ed9);
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-    font-weight: 500;
-    box-shadow: 0 4px 15px rgba(0, 136, 204, 0.2);
-}
-
-.telegram-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2rem;
-    }
-    
-    .hero h2 {
-        font-size: 1.2rem;
-    }
-    
-    nav {
-        gap: 1rem;
-    }
-    
-    nav a {
-        padding: 0.4rem 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .students-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .report-form,
-    .about-content {
-        padding: 2rem;
-    }
-}
-
-/* Additional Animations */
-@keyframes slideInUp {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.student-card {
-    animation: slideInUp 0.6s ease-out;
-}
-
-.student-card:nth-child(odd) {
-    animation-delay: 0.1s;
-}
-
-.student-card:nth-child(even) {
-    animation-delay: 0.2s;
-}
-
-/* Loading Animation */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.btn:active {
-    animation: pulse 0.3s ease-in-out;
-}
-```</style>
 </body>
 </html>
-```
