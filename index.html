@@ -1,794 +1,860 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 11 - Jayapala School</title>
-    <!-- Using Google Fonts for a soft, modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Jayapala School - Grade 10 System</title>
     
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* --- CSS Reset & Variables --- */
         :root {
-            --primary-color: #5c6bc0;
-            --primary-dark: #3949ab;
-            --secondary-color: #26a69a;
-            --bg-color: #f3f4f6;
-            --text-color: #37474f;
-            --text-light: #78909c;
-            --white: #ffffff;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --transition: all 0.3s ease;
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #fff;
+            --text-dark: #333;
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --owner-gold: #ffd700;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-color);
-            background: var(--bg-color);
-            /* Soft, comfortable background image */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)), 
-                              url('https://picsum.photos/seed/schoolbg/1920/1080');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            line-height: 1.6;
+            background: linear-gradient(45deg, #1cb5e0 0%, #000851 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-image: url('https://picsum.photos/seed/school123/1920/1080'); /* School Theme BG */
+            background-size: cover;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
         }
 
-        /* --- Header & Navigation --- */
-        header {
-            background: rgba(255, 255, 255, 0.95);
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- Glassmorphism Utilities --- */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             box-shadow: var(--card-shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
         }
 
-        .nav-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
+            padding-top: 100px; /* Space for fixed header */
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        nav ul {
+        .nav-links {
             display: flex;
-            list-style: none;
             gap: 20px;
+            list-style: none;
         }
 
-        nav a {
+        .nav-links li a {
             text-decoration: none;
-            color: var(--text-color);
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 500;
-            transition: var(--transition);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
-        nav a:hover, nav a.active {
-            background-color: var(--primary-color);
-            color: var(--white);
+        .nav-links li a:hover, .nav-links li a.active {
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(78, 84, 200, 0.4);
         }
 
-        .login-btn {
-            background-color: var(--secondary-color);
-            color: white !important;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-        }
-
-        .login-btn:hover {
-            background-color: #00897b;
-            transform: translateY(-2px);
-        }
-
-        /* Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* --- Main Layout --- */
-        main {
-            flex: 1;
-            max-width: 1200px;
-            width: 100%;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .view {
+        .user-badge {
             display: none; /* Hidden by default */
-            animation: fadeIn 0.5s ease-in-out;
+            background: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            align-items: center;
+            gap: 5px;
+            animation: fadeIn 0.5s ease;
         }
 
-        .view.active {
-            display: block; /* Show active view */
+        .owner-badge {
+            background: linear-gradient(45deg, #ffd700, #ffaa00);
+            color: #000;
+            display: none;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- Sections General --- */
+        section {
+            display: none; /* All sections hidden initially */
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        section.active-section {
+            display: block;
+        }
+
+        h2.section-title {
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            display: inline-block;
+            padding-bottom: 10px;
         }
 
         /* --- Home Section --- */
         .hero {
             text-align: center;
-            margin-bottom: 3rem;
-            padding: 3rem;
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+            padding: 50px 20px;
         }
-
         .hero h1 {
-            font-size: 2.5rem;
-            color: var(--primary-dark);
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #a1c4fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hero h2 {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .teacher-card {
-            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
-            border-left: 5px solid var(--primary-color);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: var(--card-shadow);
-        }
-
-        .teacher-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        /* --- Students Section --- */
+        /* --- Cards (Teacher, Credits, Students) --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 25px;
         }
 
-        .student-card {
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .student-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .student-header {
-            height: 80px;
-            background: var(--primary-color);
+        .card {
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
             position: relative;
+            overflow: hidden;
         }
 
-        .student-img {
-            width: 80px;
-            height: 80px;
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            border: 4px solid var(--white);
-            position: absolute;
-            bottom: -40px;
-            left: 20px;
-            background-color: #eee;
+            margin-bottom: 15px;
+            border: 3px solid var(--secondary-color);
             object-fit: cover;
         }
 
-        .student-body {
-            padding: 3rem 1.5rem 1.5rem;
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
 
-        .student-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--primary-dark);
+        .card p {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
-        .student-desc {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            background: #f9fafb;
-            padding: 0.75rem;
-            border-radius: 8px;
-            border-left: 3px solid var(--secondary-color);
-        }
-
-        /* --- Report Section --- */
+        /* --- Forms (Login, Register, Reports) --- */
         .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #cfd8dc;
+            padding: 12px;
             border-radius: 8px;
-            font-family: inherit;
-            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
         }
 
         .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.1);
+            background: rgba(255,255,255,0.2);
+            border-color: var(--secondary-color);
         }
 
-        button.btn-primary {
+        .btn {
             width: 100%;
-            padding: 0.85rem;
-            background-color: var(--primary-color);
-            color: white;
+            padding: 12px;
             border: none;
             border-radius: 8px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
             font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
         }
 
-        button.btn-primary:hover {
-            background-color: var(--primary-dark);
+        .btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* --- About/Credits Section --- */
-        .credit-card {
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
-            padding: 3rem;
-            text-align: center;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .credit-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-            object-fit: cover;
-        }
-
-        .credit-details {
-            margin: 1.5rem 0;
-        }
-
-        .telegram-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: #0088cc;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .telegram-link:hover {
-            background-color: #0077b5;
-            transform: translateY(-2px);
-        }
-
-        /* --- Auth Section (Login/Register) --- */
-        .auth-wrapper {
-            max-width: 400px;
-            margin: 2rem auto;
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .auth-tabs {
+        /* --- Chat Room --- */
+        .chat-container {
+            height: 70vh;
             display: flex;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #eee;
+            flex-direction: column;
         }
-
-        .auth-tab {
+        
+        .chat-messages {
             flex: 1;
-            text-align: center;
-            padding: 1rem;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-light);
-            transition: var(--transition);
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .auth-tab.active {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            position: relative;
+            animation: fadeIn 0.3s ease;
         }
 
-        .auth-form {
-            display: none;
+        .msg-left {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.2);
+            border-bottom-left-radius: 2px;
         }
 
-        .auth-form.active {
+        .msg-right {
+            align-self: flex-end;
+            background: var(--primary-color);
+            color: #fff;
+            border-bottom-right-radius: 2px;
+        }
+
+        .msg-owner {
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            color: #000;
+            font-weight: bold;
+            align-self: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            border: 1px solid #fff;
+        }
+
+        .msg-sender {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-bottom: 4px;
             display: block;
         }
 
-        /* --- Footer --- */
-        footer {
-            background: var(--text-color);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: auto;
+        .chat-input-area {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            background: rgba(0,0,0,0.2);
         }
 
-        /* --- Toast Notification --- */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 50px;
-            padding: 16px;
+        /* --- Reports --- */
+        #report-list {
+            margin-top: 30px;
+        }
+        .report-item {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        /* --- Notifications --- */
+        .toast {
             position: fixed;
-            z-index: 2000;
-            left: 50%;
             bottom: 30px;
-            font-size: 17px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            opacity: 0;
-            transition: opacity 0.5s, bottom 0.5s;
+            right: 30px;
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 5px solid #00ff88;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+        }
+        .toast.show {
+            transform: translateX(0);
         }
 
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
-
-        #toast.success { background-color: var(--secondary-color); }
-        #toast.error { background-color: #ef5350; }
-
-        /* --- Responsive Design --- */
+        /* --- Mobile Responsive --- */
         @media (max-width: 768px) {
-            .nav-container {
-                flex-wrap: wrap;
+            .nav-links {
+                display: none; /* In a real app, add a hamburger menu */
             }
-            
+            /* Simple mobile nav for demo */
+            .nav-links.mobile-active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0,0,0,0.9);
+                padding: 20px;
+            }
+            nav {
+                padding: 15px;
+            }
             .menu-toggle {
                 display: block;
-                margin-left: auto;
+                color: #fff;
+                font-size: 1.5rem;
+                cursor: pointer;
             }
-
-            nav ul {
+        }
+        @media (min-width: 769px) {
+            .menu-toggle {
                 display: none;
-                flex-direction: column;
-                width: 100%;
-                margin-top: 1rem;
-                background: var(--white);
-                padding: 1rem;
-                border-radius: 8px;
-                box-shadow: var(--card-shadow);
-            }
-
-            nav ul.show {
-                display: flex;
-            }
-
-            nav li {
-                text-align: center;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo" onclick="switchView('home')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M12 12v9"/></svg>
-                Jayapala School
-            </a>
-            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-            <nav>
-                <ul id="nav-links">
-                    <li><a onclick="switchView('home')" class="active">Home</a></li>
-                    <li><a onclick="switchView('students')">Students</a></li>
-                    <li><a onclick="switchView('report')">Report</a></li>
-                    <li><a onclick="switchView('about')">About</a></li>
-                    <!-- Login link in header -->
-                    <li><a onclick="switchView('auth')" class="login-btn">Login</a></li>
-                </ul>
-            </nav>
+    <!-- Header / Navigation Bar -->
+    <nav class="glass">
+        <div class="logo">
+            <i class="fas fa-school"></i> Jayapala School
         </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main>
         
-        <!-- HOME VIEW -->
-        <section id="home" class="view active">
-            <div class="hero">
-                <h1>Grade 11 – Jayapala School</h1>
-                <h2>Karukkuliya</h2>
-                
-                <div class="teacher-card">
-                    <img src="https://picsum.photos/seed/teacher/200/200" alt="Class Teacher" class="teacher-avatar">
-                    <h3>Class Teacher</h3>
-                    <p style="font-size: 1.2rem; color: var(--primary-dark); margin-top: 0.5rem;">M.R.S. Pavithra Hirushini</p>
-                    <p style="margin-top: 1rem; color: var(--text-light);">Dedicated to guiding students towards a bright future through discipline and education.</p>
+        <div class="menu-toggle" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" onclick="navigate('home')" class="active">Home</a></li>
+            <li><a href="#" onclick="navigate('students')">සිසුන්</a></li>
+            <li><a href="#" onclick="navigate('teacher')">පන්තිභාර ගුරුතුමිය</a></li>
+            <li><a href="#" onclick="navigate('chat')">Chat Room</a></li>
+            <li><a href="#" onclick="navigate('reports')">Report Sending</a></li>
+            <li><a href="#" onclick="navigate('credits')">About Credit</a></li>
+            
+            <li id="nav-login"><a href="#" onclick="navigate('login')">Login</a></li>
+            <li id="nav-register"><a href="#" onclick="navigate('register')">Register</a></li>
+            <li id="nav-logout" style="display:none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+
+        <div id="user-display" class="user-badge">
+            <i class="fas fa-user-check"></i> <span id="username-span"></span>
+        </div>
+        <div id="owner-display" class="user-badge owner-badge">
+            <i class="fas fa-crown"></i> OWNER
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- 1. Home Section -->
+        <section id="home" class="active-section">
+            <div class="hero glass">
+                <h1>Grade 10 - Class of 2024</h1>
+                <p>Jayapala School, Karukkuliya</p>
+                <br>
+                <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                    අපගේ පන්තියේ තොරතුරු, ප්‍රවෘත්ති සහ සහයෝගය හුවමාරු කර ගැනීම සඳහා නිර්මාණය කර ඇති නවීන වෙබ් අඩවියයි.
+                </p>
+                <br>
+                <button class="btn" style="width: auto; padding: 10px 30px;" onclick="navigate('students')">View Students</button>
+            </div>
+        </section>
+
+        <!-- 2. Students Section -->
+        <section id="students">
+            <center><h2 class="section-title">Grade 10 - සිසුන්ගේ තොරතුරු</h2></center>
+            <div class="grid-container" id="student-grid">
+                <!-- Javascript will populate this -->
+            </div>
+        </section>
+
+        <!-- 3. Teacher Section -->
+        <section id="teacher">
+            <center><h2 class="section-title">පන්තිභාර ගුරුතුමිය</h2></center>
+            <div class="glass card" style="max-width: 500px; margin: 0 auto;">
+                <img src="https://ui-avatars.com/api/?name=Pavithra+Hirushini&background=8f94fb&color=fff&size=150" alt="Teacher" class="avatar">
+                <h3>M.R.S. Pavithra Hirushini</h3>
+                <p style="font-weight: bold; color: var(--secondary-color);">Grade 10 Class Teacher</p>
+                <br>
+                <p>"දරුවන්ගේ අනාගතය සාර්ථක කිරීම සඳහා කැපවී සිටින අපගේ මාර්ගයෝත්මක ආදර්ශයයි."</p>
+            </div>
+        </section>
+
+        <!-- 4. Chat Room -->
+        <section id="chat">
+            <center><h2 class="section-title">Class Chat Room</h2></center>
+            <div class="glass chat-container">
+                <div class="chat-messages" id="chat-box">
+                    <!-- Messages go here -->
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" class="form-control" placeholder="මෙහි ලියන්න..." onkeypress="handleChatEnter(event)">
+                    <button class="btn" style="width: auto;" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
         </section>
 
-        <!-- STUDENTS VIEW -->
-        <section id="students" class="view">
-            <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary-dark);">Class Students</h2>
-            <div class="grid-container">
-                <!-- Student 1 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/ishan/150/150" alt="Ishan" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Ishan Nethmika</h3>
-                        <div class="student-desc">A kind child, but his studies have been affected due to romantic relationships.</div>
-                    </div>
+        <!-- 5. Report Sending -->
+        <section id="reports">
+            <center><h2 class="section-title">Report Sending System</h2></center>
+            
+            <div class="glass form-container">
+                <h3 style="margin-bottom: 20px;">අලුත් Report එකක් යවන්න</h3>
+                <div class="form-group">
+                    <label>යවන්නාගේ නම</label>
+                    <input type="text" id="rep-name" class="form-control" placeholder="ඔබේ නම">
                 </div>
-
-                <!-- Student 2 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/himash/150/150" alt="Himash" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Himash Sanjana</h3>
-                        <div class="student-desc">Has shown poor school attendance in recent years.</div>
-                    </div>
+                <div class="form-group">
+                    <label>විෂයය</label>
+                    <input type="text" id="rep-subject" class="form-control" placeholder="විෂය">
                 </div>
-
-                <!-- Student 3 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/isuru/150/150" alt="Isuru" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Isuru Madusankha</h3>
-                        <div class="student-desc">Studies with great enthusiasm. Keep it up!</div>
-                    </div>
+                <div class="form-group">
+                    <label>පණිවිඩය</label>
+                    <textarea id="rep-msg" class="form-control" rows="4" placeholder="විස්තර..."></textarea>
                 </div>
+                <button class="btn" onclick="submitReport()">Submit Report</button>
+            </div>
 
-                <!-- Student 4 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/naveen/150/150" alt="Naveen" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Naveen Tharusha</h3>
-                        <div class="student-desc">Very intelligent; scored 153 marks in the scholarship examination.</div>
-                    </div>
-                </div>
-
-                <!-- Student 5 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/malidu/150/150" alt="Malidu" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Malidu Hirushan</h3>
-                        <div class="student-desc">Very diligent in his studies.</div>
-                    </div>
-                </div>
-
-                <!-- Student 6 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/thikshana/150/150" alt="Thikshana" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Thikshana Viduranga</h3>
-                        <div class="student-desc">Can overcome life due to his passion. Good luck!</div>
-                    </div>
-                </div>
-
-                <!-- Student 7 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/sanjana/150/150" alt="Sanjana" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Sanjana Prabath</h3>
-                        <div class="student-desc">Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</div>
-                    </div>
-                </div>
-
-                <!-- Student 8 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Shenal Anuhas</h3>
-                        <div class="student-desc">Website creator; personal information intentionally not included.</div>
-                    </div>
-                </div>
-
-                <!-- Student 9 -->
-                <div class="student-card">
-                    <div class="student-header"></div>
-                    <img src="https://picsum.photos/seed/tharaka/150/150" alt="Tharaka" class="student-img">
-                    <div class="student-body">
-                        <h3 class="student-name">Tharaka Prasanna</h3>
-                        <div class="student-desc">Information intentionally not disclosed.</div>
-                    </div>
+            <div id="report-list-container" style="display: none; margin-top: 40px;">
+                <h3 style="margin-bottom: 15px; border-bottom: 1px solid #fff;">Received Reports (Owner Only)</h3>
+                <div id="report-list">
+                    <!-- Reports load here -->
                 </div>
             </div>
         </section>
 
-        <!-- REPORT VIEW -->
-        <section id="report" class="view">
-            <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary-dark);">Send Report</h2>
-            <div class="form-container">
-                <form id="reportForm" onsubmit="handleReportSubmit(event)">
-                    <div class="form-group">
-                        <label for="senderName">Your Name</label>
-                        <input type="text" id="senderName" class="form-control" placeholder="Enter your name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="studentName">Student Name</label>
-                        <select id="studentName" class="form-control" required>
-                            <option value="" disabled selected>Select a student</option>
-                            <option value="Ishan Nethmika">Ishan Nethmika</option>
-                            <option value="Himash Sanjana">Himash Sanjana</option>
-                            <option value="Isuru Madusankha">Isuru Madusankha</option>
-                            <option value="Naveen Tharusha">Naveen Tharusha</option>
-                            <option value="Malidu Hirushan">Malidu Hirushan</option>
-                            <option value="Thikshana Viduranga">Thikshana Viduranga</option>
-                            <option value="Sanjana Prabath">Sanjana Prabath</option>
-                            <option value="Shenal Anuhas">Shenal Anuhas</option>
-                            <option value="Tharaka Prasanna">Tharaka Prasanna</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="reportMessage">Report Message</label>
-                        <textarea id="reportMessage" class="form-control" rows="5" placeholder="Write your report details here..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary">Send Report</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- ABOUT / CREDIT VIEW -->
-        <section id="about" class="view">
-            <div class="credit-card">
-                <img src="https://picsum.photos/seed/crypto/200/200" alt="Creator" class="credit-avatar">
-                <h2 style="color: var(--primary-dark);">Shenal Anuhas</h2>
-                <p style="color: var(--secondary-color); font-weight: 500;">Web Developer</p>
+        <!-- 6. Credit Page -->
+        <section id="credits">
+            <center><h2 class="section-title">About Credit</h2></center>
+            <div class="glass card" style="max-width: 400px; margin: 0 auto; animation: float 6s ease-in-out infinite;">
+                <img src="https://picsum.photos/seed/shenal/150/150" alt="Shenal" class="avatar" style="border-color: var(--owner-gold);">
+                <h3 style="color: var(--owner-gold);">Shenal Anuhas</h3>
+                <p style="margin-bottom: 10px;"><strong>Age:</strong> 15+</p>
+                <p style="margin-bottom: 20px;">Full Stack Developer | Web Designer</p>
                 
-                <div class="credit-details">
-                    <p><strong>Age:</strong> 15+</p>
-                    <p><strong>Project:</strong> Grade 10 Class Website</p>
-                </div>
-
-                <p style="margin-bottom: 1.5rem;">Feel free to contact me for projects or inquiries.</p>
-                
-                <a href="https://t.me/Crypto_RIV" target="_blank" class="telegram-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.086 1.862.743 2.31.475.328 1.907 1.07 3.655 2.024.956.515 1.66.896 2.34 1.26.526.288 1.01.553 1.487.815.933.507 2.093 1.138 2.924 1.138.832 0 1.991-.631 2.925-1.139.475-.26.96-.525 1.486-.813.68-.365 1.385-.746 2.34-1.261 1.748-.954 3.18-1.696 3.655-2.024.657-.448 1.471-1.342.743-2.31-.483-.569-1.053-.754-1.473-.901-.535-.188-1.906-.717-2.85-1.09L3.22 2.648a2.253 2.253 0 0 0-1.022-.215z"/></svg>
-                    Contact on Telegram
+                <a href="https://t.me/Crypto_RIV" target="_blank" class="btn" style="background: #0088cc;">
+                    <i class="fab fa-telegram-plane"></i> Telegram
                 </a>
             </div>
         </section>
 
-        <!-- AUTH VIEW (LOGIN / REGISTER) -->
-        <section id="auth" class="view">
-            <div class="auth-wrapper">
-                <div class="auth-tabs">
-                    <div class="auth-tab active" onclick="switchAuth('login')">Login</div>
-                    <div class="auth-tab" onclick="switchAuth('register')">Register</div>
+        <!-- 7. Login Page -->
+        <section id="login">
+            <center><h2 class="section-title">Login</h2></center>
+            <div class="glass form-container">
+                <div class="form-group">
+                    <label>සම්පූර්ණ නම</label>
+                    <input type="text" id="login-name" class="form-control" placeholder="User Name">
                 </div>
-
-                <!-- Login Form -->
-                <form id="loginForm" class="auth-form active" onsubmit="handleAuth(event, 'Login')">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" required placeholder="Enter username">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" required placeholder="Enter password">
-                    </div>
-                    <button type="submit" class="btn-primary">Login</button>
-                </form>
-
-                <!-- Register Form -->
-                <form id="registerForm" class="auth-form" onsubmit="handleAuth(event, 'Registration')">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" class="form-control" required placeholder="Full name">
-                    </div>
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" required placeholder="Choose username">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" required placeholder="Create password">
-                    </div>
-                    <button type="submit" class="btn-primary">Register</button>
-                </form>
+                <div class="form-group">
+                    <label>මුරපදය</label>
+                    <input type="password" id="login-pass" class="form-control" placeholder="Password">
+                </div>
+                <button class="btn" onclick="login()">Login</button>
+                <p style="margin-top: 15px; text-align: center; font-size: 0.9rem;">
+                    ගිණුමක් නැත්නම්? <a href="#" onclick="navigate('register')" style="color: var(--secondary-color);">Register කරන්න</a>
+                </p>
             </div>
         </section>
 
-    </main>
+        <!-- 8. Register Page -->
+        <section id="register">
+            <center><h2 class="section-title">Register</h2></center>
+            <div class="glass form-container">
+                <div class="form-group">
+                    <label>සම්පූර්ණ නම</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="ඔබේ නම">
+                </div>
+                <div class="form-group">
+                    <label>මුරපදය</label>
+                    <input type="password" id="reg-pass" class="form-control" placeholder="Password සෑදීම">
+                </div>
+                <button class="btn" onclick="register()">Create Account</button>
+                <p style="margin-top: 15px; text-align: center; font-size: 0.9rem;">
+                    දැනටමත් ගිණුමක් තිබේද? <a href="#" onclick="navigate('login')" style="color: var(--secondary-color);">Login වන්න</a>
+                </p>
+            </div>
+        </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Jayapala School, Karukkuliya. Grade 11 Class.</p>
-    </footer>
+    </div>
 
-    <!-- Toast Notification Element -->
-    <div id="toast">Message</div>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Operation Successful</div>
 
-    <!-- JavaScript -->
     <script>
+        // --- Data Section ---
+        const studentsData = [
+            { name: "ඉෂාන් නෙත්මික", desc: "ඉෂාන් හොඳ ගුණගතික දරුවෙකි. නමුත් ආදර සම්බන්ධතා හේතුවෙන් ඔහුගේ අධ්‍යාපනයට බාධා වී ඇත.", color: "#ff7675" },
+            { name: "හිමාෂ් සංජන", desc: "පසුගිය වසර කිහිපය තුළ පාසල් පැමිණීම අඩු වී ඇත.", color: "#74b9ff" },
+            { name: "ඉසුරු මදුසංඛ", desc: "ඉතා උනන්දුවෙන් අධ්‍යාපනය කරයි. කතා කිරීම පාලනය කරගත යුතුය.", color: "#55efc4" },
+            { name: "නවීන් තරුෂ", desc: "ඉතා බුද්ධිමත් දරුවෙකි. ශිෂ්‍යත්ව විභාගයෙන් ලකුණු 153ක් ලබා ඇත.", color: "#ffeaa7" },
+            { name: "මාලිදු හිරුෂාන්", desc: "ඉතා කැපවීමෙන් අධ්‍යාපනය කරන දරුවෙකි.", color: "#a29bfe" },
+            { name: "තික්ෂණ විදුරංග", desc: "උනන්දුව හේතුවෙන් ජීවිතයේ අභියෝග ජයගත හැකි දරුවෙකි. සුභ පැතුම්.", color: "#fd79a8" },
+            { name: "සංජන ප්‍රබත්", desc: "Free Fire වීඩියෝ ක්‍රීඩාවට ඇබ්බැහිවීම නිසා අධ්‍යාපනය නොසලකා හරිමින් සිටී.", color: "#e17055" },
+            { name: "ශෙනාල් අනුහස්", desc: "මෙම වෙබ්සයිට් එක නිර්මාණය කළ බැවින්, තොරතුරු ඇතුළත් කර නොමැත.", color: "#6c5ce7", isOwner: true },
+            { name: "තාරක ප්‍රසන්න", desc: "තාරක ගැන විස්තර නොදක්වයි 😐", color: "#b2bec3" }
+        ];
+
+        // --- State Management ---
+        let currentUser = null;
+        let isOwner = false;
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStudents();
+            checkSession();
+            loadChat();
+        });
+
         // --- Navigation Logic ---
-        function switchView(viewId) {
-            // Hide all views
-            const views = document.querySelectorAll('.view');
-            views.forEach(view => {
-                view.classList.remove('active');
-            });
+        function navigate(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active-section'));
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
 
-            // Show selected view
-            document.getElementById(viewId).classList.add('active');
-
-            // Update Nav Link Active State
-            const links = document.querySelectorAll('nav a');
+            // Show target section
+            document.getElementById(sectionId).classList.add('active-section');
+            
+            // Highlight nav item
+            // Simple approximation for active class logic
+            const links = document.querySelectorAll('.nav-links a');
             links.forEach(link => {
-                link.classList.remove('active');
-                // Check if the link text roughly matches the viewId or contains it
-                if (link.getAttribute('onclick').includes(viewId)) {
+                if(link.getAttribute('onclick').includes(sectionId)) {
                     link.classList.add('active');
                 }
             });
 
             // Close mobile menu if open
-            const navUl = document.getElementById('nav-links');
-            if (navUl.classList.contains('show')) {
-                navUl.classList.remove('show');
+            document.getElementById('navLinks').classList.remove('mobile-active');
+
+            // If navigating to reports, check owner status to show list
+            if(sectionId === 'reports') {
+                loadReports();
             }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('mobile-active');
+        }
+
+        // --- Render Students ---
+        function renderStudents() {
+            const grid = document.getElementById('student-grid');
+            grid.innerHTML = '';
             
-            // Scroll to top
-            window.scrollTo(0,0);
+            studentsData.forEach((student, index) => {
+                const avatarUrl = student.isOwner 
+                    ? `https://ui-avatars.com/api/?name=${student.name}&background=ffd700&color=000&bold=true`
+                    : `https://ui-avatars.com/api/?name=${student.name}&background=random`;
+
+                const card = document.createElement('div');
+                card.className = 'glass card';
+                card.innerHTML = `
+                    <img src="${avatarUrl}" alt="${student.name}" class="avatar">
+                    <h3>${student.name} ${student.isOwner ? '<i class="fas fa-crown" style="color: gold;"></i>' : ''}</h3>
+                    <p>${student.desc}</p>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        function toggleMenu() {
-            const navUl = document.getElementById('nav-links');
-            navUl.classList.toggle('show');
-        }
-
-        // --- Auth Logic (Visual Only) ---
-        function switchAuth(type) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const tabs = document.querySelectorAll('.auth-tab');
-
-            if (type === 'login') {
-                loginForm.classList.add('active');
-                registerForm.classList.remove('active');
-                tabs[0].classList.add('active');
-                tabs[1].classList.remove('active');
-            } else {
-                loginForm.classList.remove('active');
-                registerForm.classList.add('active');
-                tabs[0].classList.remove('active');
-                tabs[1].classList.add('active');
-            }
-        }
-
-        function handleAuth(event, type) {
-            event.preventDefault();
-            // Simulate backend call
-            showToast(`${type} successful! Welcome to Grade 10.`, 'success');
-            // Clear inputs
-            event.target.reset();
-            // Redirect to home after short delay
-            setTimeout(() => {
-                switchView('home');
-            }, 1500);
-        }
-
-        // --- Report Form Logic ---
-        function handleReportSubmit(event) {
-            event.preventDefault();
-            
-            const sender = document.getElementById('senderName').value;
-            const student = document.getElementById('studentName').value;
-            const message = document.getElementById('reportMessage').value;
-
-            // Simple validation check (HTML5 required handles most)
-            if(sender && student && message) {
-                showToast(`Report sent for ${student} successfully!`, 'success');
-                document.getElementById('reportForm').reset();
-            } else {
-                showToast('Please fill in all fields.', 'error');
-            }
-        }
-
-        // --- Toast Notification System ---
-        function showToast(message, type) {
-            const toast = document.getElementById("toast");
-            toast.className = "show"; // Add show class
-            if (type === 'success') {
-                toast.classList.add('success');
-            } else if (type === 'error') {
-                toast.classList.add('error');
-            }
-            
+        // --- Authentication System ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
             toast.innerText = message;
-
-            // Hide after 3 seconds
-            setTimeout(function(){ 
-                toast.className = toast.className.replace("show", ""); 
-                // Remove type classes after hiding
-                setTimeout(() => {
-                    toast.classList.remove('success', 'error');
-                }, 500);
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
             }, 3000);
+        }
+
+        function checkSession() {
+            const user = localStorage.getItem('currentUser');
+            if (user) {
+                const userData = JSON.parse(user);
+                loginSuccess(userData.name, userData.isOwner, false);
+            }
+        }
+
+        function register() {
+            const name = document.getElementById('reg-name').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+
+            if (!name || !pass) {
+                showToast("කරුණාකර සියලු විස්තර පුරවන්න!");
+                return;
+            }
+
+            // Check if user exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            if (users.find(u => u.name === name)) {
+                showToast("මෙම නමින් පරිශීලකයෙක් සිටී.");
+                return;
+            }
+
+            // Save user
+            users.push({ name, pass });
+            localStorage.setItem('users', JSON.stringify(users));
+            showToast("ලියාපදිංචිය සාර්ථකයි! Login වන්න.");
+            navigate('login');
+        }
+
+        function login() {
+            const name = document.getElementById('login-name').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            // Hardcoded Owner Check
+            if (name === 'Shenal Anuhas' && pass === 'shenal11') {
+                loginSuccess(name, true, true);
+                return;
+            }
+
+            // Normal User Check
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const validUser = users.find(u => u.name === name && u.pass === pass);
+
+            if (validUser) {
+                loginSuccess(validUser.name, false, true);
+            } else {
+                showToast("වැරදි නමක් හෝ මුරපදයක්!");
+            }
+        }
+
+        function loginSuccess(name, ownerFlag, saveSession) {
+            currentUser = name;
+            isOwner = ownerFlag;
+
+            // UI Updates
+            document.getElementById('nav-login').style.display = 'none';
+            document.getElementById('nav-register').style.display = 'none';
+            document.getElementById('nav-logout').style.display = 'block';
+            document.getElementById('user-display').style.display = 'flex';
+            document.getElementById('username-span').innerText = name;
+
+            if (isOwner) {
+                document.getElementById('owner-display').style.display = 'flex';
+            }
+
+            if (saveSession) {
+                localStorage.setItem('currentUser', JSON.stringify({ name, isOwner }));
+            }
+            
+            showToast(`සාදරයෙන් පිළිගනිමු, ${name}!`);
+            navigate('home');
+            loadChat(); // Reload chat to show user status
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            isOwner = false;
+
+            // Reset UI
+            document.getElementById('nav-login').style.display = 'block';
+            document.getElementById('nav-register').style.display = 'block';
+            document.getElementById('nav-logout').style.display = 'none';
+            document.getElementById('user-display').style.display = 'none';
+            document.getElementById('owner-display').style.display = 'none';
+            
+            document.getElementById('login-name').value = '';
+            document.getElementById('login-pass').value = '';
+
+            showToast("Logout විය.");
+            navigate('home');
+        }
+
+        // --- Chat Room ---
+        function loadChat() {
+            const chatBox = document.getElementById('chat-box');
+            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+            
+            chatBox.innerHTML = '';
+            messages.forEach(msg => {
+                appendMessageToUI(msg);
+            });
+            scrollToBottom();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            
+            if (!text || !currentUser) {
+                if(!currentUser) showToast("Chat කිරීමට පළමුව Login වන්න.");
+                return;
+            }
+
+            const newMessage = {
+                user: currentUser,
+                text: text,
+                isOwner: isOwner,
+                time: new Date().toLocaleTimeString()
+            };
+
+            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+            messages.push(newMessage);
+            localStorage.setItem('chatMessages', JSON.stringify(messages));
+
+            appendMessageToUI(newMessage);
+            input.value = '';
+            scrollToBottom();
+        }
+
+        function appendMessageToUI(msg) {
+            const chatBox = document.getElementById('chat-box');
+            const div = document.createElement('div');
+            
+            let className = 'message msg-left';
+            if (msg.isOwner) className = 'message msg-owner';
+            else if (msg.user === currentUser) className = 'message msg-right';
+
+            div.innerHTML = `
+                <span class="msg-sender">${msg.user} ${msg.isOwner ? '<i class="fas fa-crown"></i>' : ''} • ${msg.time}</span>
+                ${msg.text}
+            `;
+            div.className = className;
+            chatBox.appendChild(div);
+        }
+
+        function scrollToBottom() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleChatEnter(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        // --- Report System ---
+        function submitReport() {
+            const name = document.getElementById('rep-name').value.trim();
+            const subject = document.getElementById('rep-subject').value.trim();
+            const msg = document.getElementById('rep-msg').value.trim();
+
+            if (!name || !subject || !msg) {
+                showToast("කරුණාකර සියලු ක්ෂේත්‍ර පුරවන්න.");
+                return;
+            }
+
+            const newReport = { name, subject, msg, date: new Date().toLocaleString() };
+            
+            // Save to "Simulated" file system (LocalStorage)
+            const reports = JSON.parse(localStorage.getItem('reports') || '[]');
+            reports.push(newReport);
+            localStorage.setItem('reports', JSON.stringify(reports));
+
+            // Simulate file saving
+            console.log("Simulating save to creds.txt:", newReport);
+            showToast("Report එක සාර්ථකව යවන ලදි! (Saved to creds.txt)");
+
+            // Clear form
+            document.getElementById('rep-name').value = '';
+            document.getElementById('rep-subject').value = '';
+            document.getElementById('rep-msg').value = '';
+        }
+
+        function loadReports() {
+            const container = document.getElementById('report-list-container');
+            const list = document.getElementById('report-list');
+            
+            if (!isOwner) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            const reports = JSON.parse(localStorage.getItem('reports') || '[]');
+            
+            if (reports.length === 0) {
+                list.innerHTML = '<p style="text-align:center; opacity:0.7;">Reports කිසිවක් නැත.</p>';
+                return;
+            }
+
+            list.innerHTML = '';
+            reports.forEach((rep, index) => {
+                const item = document.createElement('div');
+                item.className = 'report-item glass';
+                item.innerHTML = `
+                    <h4>#${index + 1} - ${rep.subject}</h4>
+                    <small>By: ${rep.name} | ${rep.date}</small>
+                    <p style="margin-top: 10px;">${rep.msg}</p>
+                `;
+                list.appendChild(item);
+            });
         }
     </script>
 </body>
