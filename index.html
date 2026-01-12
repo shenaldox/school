@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jayapala School - Grade 11 System</title>
+    <title>Jayapala School - Grade 10 System</title>
     
     <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -20,6 +20,7 @@
             --text-dark: #333;
             --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             --owner-gold: #ffd700;
+            --accent-red: #ff4757;
         }
 
         * {
@@ -98,7 +99,7 @@
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 15px; /* Reduced gap for more items */
             list-style: none;
         }
 
@@ -106,10 +107,10 @@
             text-decoration: none;
             color: rgba(255, 255, 255, 0.9);
             font-weight: 500;
-            padding: 8px 16px;
+            padding: 8px 12px;
             border-radius: 20px;
             transition: all 0.3s ease;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .nav-links li a:hover, .nav-links li a.active {
@@ -169,7 +170,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- Cards (Teacher, Credits, Students) --- */
+        /* --- Cards (Teacher, Credits, Students, Announcements) --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -187,6 +188,28 @@
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Specific for Announcement Cards */
+        .ann-card {
+            text-align: left;
+            border-left: 5px solid var(--secondary-color);
+        }
+        .ann-card.new {
+            border-left: 5px solid var(--accent-red);
+            background: rgba(255, 71, 87, 0.1);
+        }
+
+        .ann-date {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .ann-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #fff;
         }
 
         .avatar {
@@ -209,9 +232,9 @@
             font-size: 0.95rem;
         }
 
-        /* --- Forms (Login, Register, Reports) --- */
+        /* --- Forms (Login, Register, Reports, Announcements) --- */
         .form-container {
-            max-width: 400px;
+            max-width: 500px;
             margin: 50px auto;
             padding: 40px;
         }
@@ -259,6 +282,11 @@
         .btn:hover {
             transform: scale(1.02);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            margin-top: 10px;
         }
 
         /* --- Chat Room --- */
@@ -355,9 +383,8 @@
         /* --- Mobile Responsive --- */
         @media (max-width: 768px) {
             .nav-links {
-                display: none; /* In a real app, add a hamburger menu */
+                display: none; 
             }
-            /* Simple mobile nav for demo */
             .nav-links.mobile-active {
                 display: flex;
                 flex-direction: column;
@@ -367,6 +394,7 @@
                 width: 100%;
                 background: rgba(0,0,0,0.9);
                 padding: 20px;
+                z-index: 999;
             }
             nav {
                 padding: 15px;
@@ -399,10 +427,11 @@
 
         <ul class="nav-links" id="navLinks">
             <li><a href="#" onclick="navigate('home')" class="active">Home</a></li>
+            <li><a href="#" onclick="navigate('announcements')">Announcements</a></li>
             <li><a href="#" onclick="navigate('students')">සිසුන්</a></li>
             <li><a href="#" onclick="navigate('teacher')">පන්තිභාර ගුරුතුමිය</a></li>
             <li><a href="#" onclick="navigate('chat')">Chat Room</a></li>
-            <li><a href="#" onclick="navigate('reports')">Report Sending</a></li>
+            <li><a href="#" onclick="navigate('reports')">Reports</a></li>
             <li><a href="#" onclick="navigate('credits')">About Credit</a></li>
             
             <li id="nav-login"><a href="#" onclick="navigate('login')">Login</a></li>
@@ -423,7 +452,7 @@
         <!-- 1. Home Section -->
         <section id="home" class="active-section">
             <div class="hero glass">
-                <h1>Grade 11 - Class of 2026</h1>
+                <h1>Grade 10 - Class of 2024</h1>
                 <p>Jayapala School, Karukkuliya</p>
                 <br>
                 <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
@@ -434,7 +463,33 @@
             </div>
         </section>
 
-        <!-- 2. Students Section -->
+        <!-- 2. Announcements Section -->
+        <section id="announcements">
+            <center><h2 class="section-title">පන්ති නිවේදන (Announcements)</h2></center>
+            
+            <!-- Owner Only: Add Announcement Form -->
+            <div id="admin-announce-panel" class="glass form-container" style="display: none; border: 1px solid var(--owner-gold);">
+                <h3 style="color: var(--owner-gold); margin-bottom: 15px; text-align: center;"><i class="fas fa-bullhorn"></i> Post New Announcement</h3>
+                <div class="form-group">
+                    <label>මාතෘකාව (Title)</label>
+                    <input type="text" id="ann-title" class="form-control" placeholder="Eg: Extra Class Tomorrow">
+                </div>
+                <div class="form-group">
+                    <label>විස්තර (Message)</label>
+                    <textarea id="ann-msg" class="form-control" rows="4" placeholder="Announcement details..."></textarea>
+                </div>
+                <button class="btn" onclick="postAnnouncement()">Post Announcement</button>
+                <br>
+                <button class="btn btn-danger" onclick="clearAllAnnouncements()">Delete All Announcements</button>
+            </div>
+
+            <br>
+            <div class="grid-container" id="announcement-grid">
+                <!-- Announcements will load here -->
+            </div>
+        </section>
+
+        <!-- 3. Students Section -->
         <section id="students">
             <center><h2 class="section-title">Grade 10 - සිසුන්ගේ තොරතුරු</h2></center>
             <div class="grid-container" id="student-grid">
@@ -442,19 +497,19 @@
             </div>
         </section>
 
-        <!-- 3. Teacher Section -->
+        <!-- 4. Teacher Section -->
         <section id="teacher">
             <center><h2 class="section-title">පන්තිභාර ගුරුතුමිය</h2></center>
             <div class="glass card" style="max-width: 500px; margin: 0 auto;">
                 <img src="https://ui-avatars.com/api/?name=Pavithra+Hirushini&background=8f94fb&color=fff&size=150" alt="Teacher" class="avatar">
                 <h3>M.R.S. Pavithra Hirushini</h3>
-                <p style="font-weight: bold; color: var(--secondary-color);">Grade 11 Class Teacher</p>
+                <p style="font-weight: bold; color: var(--secondary-color);">Grade 10 Class Teacher</p>
                 <br>
                 <p>"දරුවන්ගේ අනාගතය සාර්ථක කිරීම සඳහා කැපවී සිටින අපගේ මාර්ගයෝත්මක ආදර්ශයයි."</p>
             </div>
         </section>
 
-        <!-- 4. Chat Room -->
+        <!-- 5. Chat Room -->
         <section id="chat">
             <center><h2 class="section-title">Class Chat Room</h2></center>
             <div class="glass chat-container">
@@ -468,7 +523,7 @@
             </div>
         </section>
 
-        <!-- 5. Report Sending -->
+        <!-- 6. Report Sending -->
         <section id="reports">
             <center><h2 class="section-title">Report Sending System</h2></center>
             
@@ -497,7 +552,7 @@
             </div>
         </section>
 
-        <!-- 6. Credit Page -->
+        <!-- 7. Credit Page -->
         <section id="credits">
             <center><h2 class="section-title">About Credit</h2></center>
             <div class="glass card" style="max-width: 400px; margin: 0 auto; animation: float 6s ease-in-out infinite;">
@@ -512,7 +567,7 @@
             </div>
         </section>
 
-        <!-- 7. Login Page -->
+        <!-- 8. Login Page -->
         <section id="login">
             <center><h2 class="section-title">Login</h2></center>
             <div class="glass form-container">
@@ -531,7 +586,7 @@
             </div>
         </section>
 
-        <!-- 8. Register Page -->
+        <!-- 9. Register Page -->
         <section id="register">
             <center><h2 class="section-title">Register</h2></center>
             <div class="glass form-container">
@@ -566,7 +621,7 @@
             { name: "තික්ෂණ විදුරංග", desc: "උනන්දුව හේතුවෙන් ජීවිතයේ අභියෝග ජයගත හැකි දරුවෙකි. සුභ පැතුම්.", color: "#fd79a8" },
             { name: "සංජන ප්‍රබත්", desc: "Free Fire වීඩියෝ ක්‍රීඩාවට ඇබ්බැහිවීම නිසා අධ්‍යාපනය නොසලකා හරිමින් සිටී.", color: "#e17055" },
             { name: "ශෙනාල් අනුහස්", desc: "මෙම වෙබ්සයිට් එක නිර්මාණය කළ බැවින්, තොරතුරු ඇතුළත් කර නොමැත.", color: "#6c5ce7", isOwner: true },
-            { name: "තාරක ප්‍රසන්න", desc: "තාරක ගැන විස්තර නොදක්වයි 😐" }
+            { name: "තාරක ප්‍රසන්න", desc: "තාරක ගැන විස්තර නොදක්වයි 😐", color: "#b2bec3" }
         ];
 
         // --- State Management ---
@@ -578,6 +633,7 @@
             renderStudents();
             checkSession();
             loadChat();
+            loadAnnouncements(); // Load announcements on start
         });
 
         // --- Navigation Logic ---
@@ -590,7 +646,6 @@
             document.getElementById(sectionId).classList.add('active-section');
             
             // Highlight nav item
-            // Simple approximation for active class logic
             const links = document.querySelectorAll('.nav-links a');
             links.forEach(link => {
                 if(link.getAttribute('onclick').includes(sectionId)) {
@@ -601,9 +656,12 @@
             // Close mobile menu if open
             document.getElementById('navLinks').classList.remove('mobile-active');
 
-            // If navigating to reports, check owner status to show list
+            // If navigating to reports or announcements, check permissions
             if(sectionId === 'reports') {
                 loadReports();
+            }
+            if(sectionId === 'announcements') {
+                renderAnnouncements(); // Re-render to ensure owner form status is correct
             }
         }
 
@@ -630,6 +688,92 @@
                 `;
                 grid.appendChild(card);
             });
+        }
+
+        // --- Announcement System ---
+        function loadAnnouncements() {
+            // Check if any exist, if not, add a default one
+            let announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            if (announcements.length === 0) {
+                const defaultAnn = {
+                    id: Date.now(),
+                    title: "Welcome to Jayapala School System",
+                    msg: "This is the default announcement. Owner can add new announcements daily!",
+                    date: new Date().toLocaleDateString()
+                };
+                announcements.push(defaultAnn);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+            }
+            renderAnnouncements();
+        }
+
+        function renderAnnouncements() {
+            const grid = document.getElementById('announcement-grid');
+            const adminPanel = document.getElementById('admin-announce-panel');
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            
+            grid.innerHTML = '';
+
+            // Show/Hide Admin Panel based on Owner status
+            if (isOwner) {
+                adminPanel.style.display = 'block';
+            } else {
+                adminPanel.style.display = 'none';
+            }
+
+            // Sort by ID (descending - newest first)
+            announcements.sort((a, b) => b.id - a.id);
+
+            announcements.forEach((ann) => {
+                const card = document.createElement('div');
+                // Add 'new' class if created today
+                const isToday = ann.date === new Date().toLocaleDateString();
+                const cardClass = isToday ? 'glass card ann-card new' : 'glass card ann-card';
+
+                card.innerHTML = `
+                    <span class="ann-date"><i class="far fa-calendar-alt"></i> ${ann.date}</span>
+                    <h3 class="ann-title">${ann.title}</h3>
+                    <p>${ann.msg}</p>
+                `;
+                card.className = cardClass;
+                grid.appendChild(card);
+            });
+        }
+
+        function postAnnouncement() {
+            const title = document.getElementById('ann-title').value.trim();
+            const msg = document.getElementById('ann-msg').value.trim();
+
+            if (!title || !msg) {
+                showToast("කරුණාකර මාතෘකාව සහ විස්තර පුරවන්න!");
+                return;
+            }
+
+            const newAnn = {
+                id: Date.now(),
+                title: title,
+                msg: msg,
+                date: new Date().toLocaleDateString()
+            };
+
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            announcements.push(newAnn);
+            localStorage.setItem('announcements', JSON.stringify(announcements));
+
+            // Clear inputs
+            document.getElementById('ann-title').value = '';
+            document.getElementById('ann-msg').value = '';
+
+            showToast("නිවේදනය සාර්ථකව පළ කරන ලදි!");
+            renderAnnouncements();
+        }
+
+        function clearAllAnnouncements() {
+            if(confirm("ඔබට විශ්වාස ද? සියලු නිවේදන මකන්න.")) {
+                localStorage.removeItem('announcements');
+                loadAnnouncements(); // Reload default
+                showToast("සියලු නිවේදන මකන ලදි.");
+            }
         }
 
         // --- Authentication System ---
@@ -659,14 +803,12 @@
                 return;
             }
 
-            // Check if user exists
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             if (users.find(u => u.name === name)) {
                 showToast("මෙම නමින් පරිශීලකයෙක් සිටී.");
                 return;
             }
 
-            // Save user
             users.push({ name, pass });
             localStorage.setItem('users', JSON.stringify(users));
             showToast("ලියාපදිංචිය සාර්ථකයි! Login වන්න.");
@@ -698,7 +840,6 @@
             currentUser = name;
             isOwner = ownerFlag;
 
-            // UI Updates
             document.getElementById('nav-login').style.display = 'none';
             document.getElementById('nav-register').style.display = 'none';
             document.getElementById('nav-logout').style.display = 'block';
@@ -715,7 +856,10 @@
             
             showToast(`සාදරයෙන් පිළිගනිමු, ${name}!`);
             navigate('home');
-            loadChat(); // Reload chat to show user status
+            loadChat(); 
+            
+            // Re-render components that depend on login status
+            renderAnnouncements(); 
         }
 
         function logout() {
@@ -723,7 +867,6 @@
             currentUser = null;
             isOwner = false;
 
-            // Reset UI
             document.getElementById('nav-login').style.display = 'block';
             document.getElementById('nav-register').style.display = 'block';
             document.getElementById('nav-logout').style.display = 'none';
@@ -735,6 +878,7 @@
 
             showToast("Logout විය.");
             navigate('home');
+            renderAnnouncements(); // Hide admin panel
         }
 
         // --- Chat Room ---
@@ -812,16 +956,13 @@
 
             const newReport = { name, subject, msg, date: new Date().toLocaleString() };
             
-            // Save to "Simulated" file system (LocalStorage)
             const reports = JSON.parse(localStorage.getItem('reports') || '[]');
             reports.push(newReport);
             localStorage.setItem('reports', JSON.stringify(reports));
 
-            // Simulate file saving
             console.log("Simulating save to creds.txt:", newReport);
             showToast("Report එක සාර්ථකව යවන ලදි! (Saved to creds.txt)");
 
-            // Clear form
             document.getElementById('rep-name').value = '';
             document.getElementById('rep-subject').value = '';
             document.getElementById('rep-msg').value = '';
