@@ -1,0 +1,495 @@
+I'll create a responsive school website for Grade 10 Jayapala School. Let me build this with HTML, CSS, and JavaScript according to your specifications.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 10 - Jayapala School, Karukkuliya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-image: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #2c3e50;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(41, 128, 185, 0.15);
+            color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #1565c0;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: #5d99c6;
+            font-weight: 400;
+        }
+
+        .teacher-info {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            text-align: center;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .teacher-info h3 {
+            color: #1565c0;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .student-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .student-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #64b5f6, #90caf9);
+        }
+
+        .student-card h4 {
+            color: #0d47a1;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .student-card p {
+            color: #37474f;
+            line-height: 1.8;
+        }
+
+        .report-form {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1565c0;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(21, 101, 192, 0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1565c0;
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1565c0, #5d99c6);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.3);
+        }
+
+        .about-content {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .about-content h3 {
+            color: #1565c0;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .about-content p {
+            color: #37474f;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .telegram-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #0088cc, #229ed9);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.2);
+        }
+
+        .telegram-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.2rem;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            nav a {
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .report-form,
+            .about-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" onclick="showSection('home')" class="active">Home / Class Info</a>
+            <a href="#" onclick="showSection('students')">Students</a>
+            <a href="#" onclick="showSection('report')">Send Report</a>
+            <a href="#" onclick="showSection('about')">About</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Jayapala School, Karukkuliya</h1>
+                <h2>Grade 10 Class Information</h2>
+            </div>
+            
+            <div class="teacher-info">
+                <h3>Class Teacher Details</h3>
+                <p><strong>Name:</strong> M.R.S. Pavithra Hirushini</p>
+                <p>Our dedicated class teacher who guides and supports us throughout our academic journey.</p>
+            </div>
+        </section>
+
+        <!-- Students Section -->
+        <section id="students" class="section">
+            <div class="hero">
+                <h2>Students Information</h2>
+            </div>
+            
+            <div class="students-grid">
+                <div class="student-card">
+                    <h4>Ishan Nethmika</h4>
+                    <p>A kind child, but his studies have been affected due to romantic relationships.</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Himash Sanjana</h4>
+                    <p>Has shown poor school attendance in recent years.</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Isuru Madusankha</h4>
+                    <p>Studies with great enthusiasm.</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Naveen Tharusha</h4>
+                    <p>Very intelligent; scored 153 marks in the scholarship examination.</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Malidu Hirushan</h4>
+                    <p>Very diligent in his studies.</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Thikshana Viduranga</h4>
+                    <p>Can overcome life due to his passion. Good luck for your future endeavors!</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Sanjana Prabath</h4>
+                    <p>Previously good in studies, but now neglecting them due to addiction to the game Free Fire.</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Shenal Anuhas</h4>
+                    <p>Website creator; personal information intentionally not included.</p>
+                </div>
+                
+                <div class="student-card">
+                    <h4>Tharaka Prasanna</h4>
+                    <p>Information intentionally not disclosed.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report Section -->
+        <section id="report" class="section">
+            <div class="hero">
+                <h2>Send Report</h2>
+            </div>
+            
+            <form class="report-form" onsubmit="handleReportSubmit(event)">
+                <div class="form-group">
+                    <label for="senderName">Sender Name</label>
+                    <input type="text" id="senderName" name="senderName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentName">Student Name</label>
+                    <select id="studentName" name="studentName" required>
+                        <option value="">Select a student</option>
+                        <option value="Ishan Nethmika">Ishan Nethmika</option>
+                        <option value="Himash Sanjana">Himash Sanjana</option>
+                        <option value="Isuru Madusankha">Isuru Madusankha</option>
+                        <option value="Naveen Tharusha">Naveen Tharusha</option>
+                        <option value="Malidu Hirushan">Malidu Hirushan</option>
+                        <option value="Thikshana Viduranga">Thikshana Viduranga</option>
+                        <option value="Sanjana Prabath">Sanjana Prabath</option>
+                        <option value="Shenal Anuhas">Shenal Anuhas</option>
+                        <option value="Tharaka Prasanna">Tharaka Prasanna</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reportMessage">Report Message</label>
+                    <textarea id="reportMessage" name="reportMessage" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Send Report</button>
+            </form>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="hero">
+                <h2>About / Credit</h2>
+            </div>
+            
+            <div class="about-content">
+                <h3>Website Creator</h3>
+                <p><strong>Name:</strong> Shenal Anuhas</p>
+                <p><strong>Age:</strong> 15+</p>
+                <p><strong>Role:</strong> Website Developer</p>
+                <p>This website was created as a class project for Grade 10 Jayapala School.</p>
+                <a href="https://t.me/Crypto_RIV" class="telegram-link" target="_blank">Contact on Telegram</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function handleReportSubmit(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const senderName = formData.get('senderName');
+            const studentName = formData.get('studentName');
+            const reportMessage = formData.get('reportMessage');
+            
+            // Show success alert
+            alert(`Report sent successfully!\n\nFrom: ${senderName}\nFor: ${studentName}\nMessage: ${reportMessage}`);
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        // Add smooth scrolling behavior
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+```
