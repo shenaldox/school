@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jayapala School - Grade 11 System</title>
+    <title>Jayapala School - Grade 10 System</title>
     
     <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -22,7 +22,6 @@
             --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             --owner-gold: #ffd700;
             --accent-red: #ff4757;
-            --chat-bg: rgba(0, 0, 0, 0.6);
         }
 
         * {
@@ -128,6 +127,17 @@
             background: var(--primary-color);
             color: #fff;
             box-shadow: 0 4px 15px rgba(78, 84, 200, 0.4);
+        }
+
+        /* Special style for Forum link */
+        .nav-links li a.forum-link {
+            background: rgba(0, 255, 128, 0.2);
+            border: 1px solid rgba(0, 255, 128, 0.5);
+            color: #00ff88;
+        }
+        .nav-links li a.forum-link:hover {
+            background: #00ff88;
+            color: #000;
         }
 
         .user-badge {
@@ -311,76 +321,6 @@
             margin-top: 15px;
         }
 
-        /* --- Chat Room --- */
-        .chat-container {
-            height: 70vh;
-            display: flex;
-            flex-direction: column;
-            background: var(--chat-bg);
-        }
-        
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* Message Bubbles - High Contrast */
-        .message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            position: relative;
-            animation: fadeIn 0.3s ease;
-            word-wrap: break-word;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .msg-left {
-            align-self: flex-start;
-            background: #e0e0e0; /* Light Gray for others */
-            color: #111; /* Dark text */
-            border-bottom-left-radius: 4px;
-        }
-
-        .msg-right {
-            align-self: flex-end;
-            background: #8f94fb; /* Primary Blue for me */
-            color: #fff;
-            border-bottom-right-radius: 4px;
-        }
-
-        .msg-owner {
-            align-self: center;
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            color: #000;
-            font-weight: bold;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            text-align: center;
-            border: 2px solid #fff;
-        }
-
-        .msg-sender {
-            font-size: 0.7rem;
-            opacity: 0.7;
-            margin-bottom: 4px;
-            display: block;
-            font-weight: bold;
-        }
-
-        .chat-input-area {
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 0 0 16px 16px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
         /* --- Reports --- */
         #report-list {
             margin-top: 20px;
@@ -484,7 +424,10 @@
             <li><a href="#" onclick="navigate('announcements')">Announcements</a></li>
             <li><a href="#" onclick="navigate('students')">සිසුන්</a></li>
             <li><a href="#" onclick="navigate('teacher')">Teacher</a></li>
-            <li><a href="#" onclick="navigate('chat')">Chat</a></li>
+            
+            <!-- Forum Link (External) -->
+            <li><a href="https://shenaldox.github.io/chatroom/" target="_blank" class="forum-link"><i class="fas fa-comments"></i> Forum</a></li>
+            
             <li><a href="#" onclick="navigate('reports')">Reports</a></li>
             <li><a href="#" onclick="navigate('credits')">Credit</a></li>
             
@@ -508,7 +451,7 @@
         <!-- 1. Home Section -->
         <section id="home" class="active-section">
             <div class="hero glass-content">
-                <h1>Grade 11 - Class of 2026</h1>
+                <h1>Grade 10 - Class of 2024</h1>
                 <p>Jayapala School, Karukkuliya</p>
                 <br>
                 <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto; color: #ddd;">
@@ -570,26 +513,12 @@
             <div class="glass-content card" style="max-width: 500px; margin: 0 auto;">
                 <img src="https://ui-avatars.com/api/?name=Pavithra+Hirushini&background=8f94fb&color=fff&size=150" alt="Teacher" class="avatar">
                 <h3>M.R.S. Pavithra Hirushini</h3>
-                <p style="font-weight: bold; color: var(--secondary-color); margin-bottom: 10px;">Grade 11 Class Teacher</p>
+                <p style="font-weight: bold; color: var(--secondary-color); margin-bottom: 10px;">Grade 10 Class Teacher</p>
                 <p>"We are committed to guiding our students towards a bright future."</p>
             </div>
         </section>
 
-        <!-- 5. Chat Room -->
-        <section id="chat">
-            <center><h2 class="section-title">Class Chat Room</h2></center>
-            <div class="glass-content chat-container">
-                <div class="chat-messages" id="chat-box">
-                    <!-- JS loads messages here -->
-                </div>
-                <div class="chat-input-area">
-                    <input type="text" id="chat-input" class="form-control" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
-                    <button class="btn" style="width: auto;" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. Report Sending -->
+        <!-- 5. Report Sending -->
         <section id="reports">
             <center><h2 class="section-title">Report System</h2></center>
             
@@ -627,7 +556,7 @@
             </div>
         </section>
 
-        <!-- 7. Credit Page -->
+        <!-- 6. Credit Page -->
         <section id="credits">
             <center><h2 class="section-title">About Credit</h2></center>
             <div class="glass-content card" style="max-width: 400px; margin: 0 auto; animation: float 6s ease-in-out infinite;">
@@ -642,7 +571,7 @@
             </div>
         </section>
 
-        <!-- 8. Login Page -->
+        <!-- 7. Login Page -->
         <section id="login">
             <center><h2 class="section-title">Login</h2></center>
             <div class="glass-content form-container">
@@ -661,7 +590,7 @@
             </div>
         </section>
 
-        <!-- 9. Register Page -->
+        <!-- 8. Register Page -->
         <section id="register">
             <center><h2 class="section-title">Register</h2></center>
             <div class="glass-content form-container">
@@ -707,7 +636,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderStudents();
             checkSession();
-            loadChat();
             loadAnnouncements();
         });
 
@@ -720,7 +648,7 @@
             
             const links = document.querySelectorAll('.nav-links a');
             links.forEach(link => {
-                if(link.getAttribute('onclick').includes(sectionId)) {
+                if(link.getAttribute('onclick') && link.getAttribute('onclick').includes(sectionId)) {
                     link.classList.add('active');
                 }
             });
@@ -736,11 +664,6 @@
             }
             if(sectionId === 'home') {
                 renderHomeAnnouncements();
-            }
-            if(sectionId === 'chat') {
-                // Ensure chat is loaded and scrolled
-                loadChat();
-                scrollToBottom();
             }
         }
 
@@ -953,10 +876,6 @@
             }
             
             showToast(`Welcome, ${name}!`);
-            
-            // Reload Chat to update user's own messages styling
-            loadChat(); 
-            
             navigate('home');
             renderAnnouncements(); 
         }
@@ -977,101 +896,10 @@
 
             showToast("Logged out.");
             navigate('home');
-            
-            // Reload Chat to clear styling for own messages
-            loadChat();
             renderAnnouncements();
         }
 
-        // --- Chat Room Logic (FIXED) ---
-        function loadChat() {
-            const chatBox = document.getElementById('chat-box');
-            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-            
-            chatBox.innerHTML = '';
-            
-            // If empty, show a system message
-            if (messages.length === 0) {
-                const sysMsg = document.createElement('div');
-                sysMsg.style.textAlign = 'center';
-                sysMsg.style.opacity = '0.6';
-                sysMsg.style.padding = '20px';
-                sysMsg.innerText = "No messages yet. Start the conversation!";
-                chatBox.appendChild(sysMsg);
-            }
-
-            messages.forEach(msg => {
-                appendMessageToUI(msg);
-            });
-            scrollToBottom();
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            
-            if (!text) return;
-            if (!currentUser) {
-                showToast("Please login to chat.");
-                return;
-            }
-
-            const newMessage = {
-                user: currentUser,
-                text: text,
-                isOwner: isOwner,
-                time: new Date().toLocaleTimeString()
-            };
-
-            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-            messages.push(newMessage);
-            localStorage.setItem('chatMessages', JSON.stringify(messages));
-
-            appendMessageToUI(newMessage);
-            input.value = '';
-            scrollToBottom();
-        }
-
-        function appendMessageToUI(msg) {
-            const chatBox = document.getElementById('chat-box');
-            
-            // If chat box is empty except system msg, clear it first (optional polish)
-            if (chatBox.children.length === 1 && chatBox.children[0].innerText === "No messages yet. Start the conversation!") {
-                chatBox.innerHTML = '';
-            }
-
-            const div = document.createElement('div');
-            
-            let className = 'message msg-left'; // Default: Others (Left)
-            
-            // Logic: If I sent it -> Right. If Owner sent it -> Center.
-            if (msg.isOwner) {
-                className = 'message msg-owner';
-            } else if (msg.user === currentUser) {
-                className = 'message msg-right';
-            }
-
-            div.innerHTML = `
-                <span class="msg-sender">${msg.user} ${msg.isOwner ? '<i class="fas fa-crown"></i>' : ''} • ${msg.time}</span>
-                ${msg.text}
-            `;
-            div.className = className;
-            chatBox.appendChild(div);
-        }
-
-        function scrollToBottom() {
-            const chatBox = document.getElementById('chat-box');
-            // Small delay to ensure DOM updated
-            setTimeout(() => {
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 50);
-        }
-
-        function handleChatEnter(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
-
-        // --- Report System Logic (FIXED) ---
+        // --- Report System Logic ---
         function submitReport() {
             const name = document.getElementById('rep-name').value.trim();
             const subject = document.getElementById('rep-subject').value.trim();
