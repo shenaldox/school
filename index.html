@@ -54,6 +54,17 @@
             100% { transform: translateY(0px); }
         }
 
+        @keyframes typing {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         /* --- Glassmorphism Utilities --- */
         .glass {
             background: var(--glass-bg-light);
@@ -129,7 +140,6 @@
             box-shadow: 0 4px 15px rgba(78, 84, 200, 0.4);
         }
 
-        /* Special style for Forum link */
         .nav-links li a.forum-link {
             background: rgba(0, 255, 128, 0.2);
             border: 1px solid rgba(0, 255, 128, 0.5);
@@ -222,7 +232,6 @@
             transform: translateY(-5px);
         }
 
-        /* Announcement Cards */
         .ann-card {
             text-align: left;
             border-left: 5px solid var(--secondary-color);
@@ -364,46 +373,221 @@
             transform: translateX(0);
         }
 
+        /* --- AI Chatbot Widget Styles --- */
+        #ai-chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1500;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #chat-toggle-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        #chat-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #chat-toggle-btn i {
+            color: #fff;
+            font-size: 28px;
+        }
+
+        #chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            overflow: hidden;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #chat-header {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #chat-header h3 {
+            font-size: 1rem;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .lang-btn.active {
+            background: #fff;
+            color: #4e54c8;
+            font-weight: bold;
+        }
+
+        #close-chat {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        #chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .chat-msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            animation: fadeIn 0.3s;
+        }
+
+        .msg-ai {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ddd;
+            border-bottom-left-radius: 2px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .msg-user {
+            align-self: flex-end;
+            background: #4e54c8;
+            color: #fff;
+            border-bottom-right-radius: 2px;
+        }
+
+        #chat-footer {
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 8px;
+        }
+
+        #chat-input {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        #send-chat {
+            background: var(--primary-color);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 12px;
+            border-bottom-left-radius: 2px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .typing-dots span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #aaa;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        .chat-disclaimer {
+            font-size: 0.65rem;
+            text-align: center;
+            color: #888;
+            padding: 5px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
         /* --- Mobile Responsive --- */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                padding-bottom: 20px;
-                flex-direction: column;
-                width: 100%;
-            }
+            .nav-links { display: none; padding-bottom: 20px; flex-direction: column; width: 100%; }
             .nav-links.mobile-active {
-                display: flex;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                background: rgba(0,0,0,0.95);
-                padding: 20px;
-                z-index: 999;
-                gap: 15px;
+                display: flex; position: absolute; top: 60px; left: 0; background: rgba(0,0,0,0.95); padding: 20px; z-index: 999; gap: 15px;
             }
-            .nav-links li {
-                width: 100%;
-            }
-            .nav-links li a {
-                display: block;
-                width: 100%;
-                padding: 12px;
-            }
-            nav {
-                padding: 10px 15px;
-            }
-            .menu-toggle {
-                display: block;
-                color: #fff;
-                font-size: 1.5rem;
-                cursor: pointer;
+            .nav-links li { width: 100%; }
+            .nav-links li a { display: block; width: 100%; padding: 12px; }
+            nav { padding: 10px 15px; }
+            .menu-toggle { display: block; color: #fff; font-size: 1.5rem; cursor: pointer; }
+            
+            #chat-window {
+                width: 90%;
+                right: 5%;
+                bottom: 90px;
+                height: 60vh;
             }
         }
         @media (min-width: 769px) {
-            .menu-toggle {
-                display: none;
-            }
+            .menu-toggle { display: none; }
         }
     </style>
 </head>
@@ -424,10 +608,7 @@
             <li><a href="#" onclick="navigate('announcements')">Announcements</a></li>
             <li><a href="#" onclick="navigate('students')">සිසුන්</a></li>
             <li><a href="#" onclick="navigate('teacher')">Teacher</a></li>
-            
-            <!-- Forum Link (External) -->
             <li><a href="https://shenaldox.github.io/chatroom/" target="_blank" class="forum-link"><i class="fas fa-comments"></i> Forum</a></li>
-            
             <li><a href="#" onclick="navigate('reports')">Reports</a></li>
             <li><a href="#" onclick="navigate('credits')">Credit</a></li>
             
@@ -451,7 +632,7 @@
         <!-- 1. Home Section -->
         <section id="home" class="active-section">
             <div class="hero glass-content">
-                <h1>Grade 10 - Class of 2024</h1>
+                <h1>Grade 11 - Class of 2024</h1>
                 <p>Jayapala School, Karukkuliya</p>
                 <br>
                 <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto; color: #ddd;">
@@ -477,7 +658,6 @@
         <section id="announcements">
             <center><h2 class="section-title">Class Announcements</h2></center>
             
-            <!-- Owner Only: Add Announcement Form -->
             <div id="admin-announce-panel" class="glass-content form-container" style="display: none; border: 2px solid var(--owner-gold);">
                 <h3 style="color: var(--owner-gold); margin-bottom: 15px; text-align: center;"><i class="fas fa-crown"></i> Post New Announcement</h3>
                 <div class="form-group">
@@ -539,18 +719,13 @@
                 <button class="btn" onclick="submitReport()">Submit Report</button>
             </div>
 
-            <!-- Owner Only: View Reports -->
             <div id="report-list-container" class="glass-content" style="margin-top: 40px; padding: 20px; display: none;">
                 <h3 style="margin-bottom: 20px; border-bottom: 1px solid #fff; padding-bottom: 10px;">
                     <i class="fas fa-file-alt"></i> Received Reports (Owner Only)
                 </h3>
-                
-                <div id="report-list">
-                    <!-- JS loads reports here -->
-                </div>
+                <div id="report-list"></div>
             </div>
             
-            <!-- Error / Info Message Area -->
             <div id="report-login-msg" class="glass-content" style="margin-top: 20px; padding: 15px; text-align: center; display: none; background: rgba(255, 71, 87, 0.2);">
                 <i class="fas fa-lock"></i> Please login as <strong>Owner</strong> to view reports.
             </div>
@@ -611,6 +786,42 @@
 
     </div>
 
+    <!-- --- AI Chatbot Widget --- -->
+    <div id="ai-chat-widget">
+        <!-- Chat Window -->
+        <div id="chat-window">
+            <div id="chat-header">
+                <h3><i class="fas fa-robot"></i> AI Tutor</h3>
+                <div class="chat-controls">
+                    <button class="lang-btn active" onclick="setChatLang('en')" title="English">EN</button>
+                    <button class="lang-btn" onclick="setChatLang('si')" title="සිංහල">SI</button>
+                    <button class="lang-btn" onclick="setChatLang('ta')" title="தமிழ்">TA</button>
+                    <button id="close-chat" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div id="chat-body">
+                <div class="chat-msg msg-ai">
+                    Hello! I am your AI study assistant. Ask me anything about your subjects! 📚
+                </div>
+                <div class="typing-indicator" id="typing-indicator">
+                    <div class="typing-dots"><span></span><span></span><span></span></div>
+                </div>
+            </div>
+            <div class="chat-disclaimer">
+                For Learning Purposes Only. AI may make mistakes.
+            </div>
+            <div id="chat-footer">
+                <input type="text" id="chat-input" placeholder="Ask something..." onkeypress="handleChatEnter(event)">
+                <button id="send-chat" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Floating Toggle Button -->
+        <button id="chat-toggle-btn" onclick="toggleChat()">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="toast">Operation Successful</div>
 
@@ -623,7 +834,7 @@
             { name: "නවීන් තරුෂ", desc: "ඉතා බුද්ධිමත් දරුවෙකි.", color: "#ffeaa7" },
             { name: "මාලිදු හිරුෂාන්", desc: "ඉතා කැපවීමෙන් අධ්‍යාපනය කරන දරුවෙකි.", color: "#a29bfe" },
             { name: "තික්ෂණ විදුරංග", desc: "උනන්දුව හේතුවෙන් ජීවිතයේ අභියෝග ජයගත හැකි.", color: "#fd79a8" },
-            { name: "සංජන ප්‍රබත්", desc: "Free Fire වීඩියෝ ක්‍රීඩාවට ඇබ්බැහිවීම නිසා අධ්‍යාපනය නොසලකා හරිමින් සිටී.", color: "#e17055" },
+            { name: "සංජන ප්‍රබත්", desc: "GOOD BOY .", color: "#e17055" },
             { name: "ශෙනාල් අනුහස්", desc: "Developer.", color: "#6c5ce7", isOwner: true },
             { name: "තාරක ප්‍රසන්න", desc: "තාරක ගැන විස්තර නොදක්වයි 😐", color: "#b2bec3" }
         ];
@@ -631,6 +842,38 @@
         // --- State Management ---
         let currentUser = null;
         let isOwner = false;
+
+        // --- AI Chatbot State ---
+        let currentLang = 'en';
+        const aiResponses = {
+            en: {
+                greeting: "Hello! I am your AI study assistant. How can I help you today?",
+                topics: ["math", "science", "history", "english", "exam", "homework"],
+                generic: "I can help with Math, Science, History, and Exam tips. Ask me a specific question!",
+                safety: "I am designed only for educational purposes. I cannot answer that.",
+                math: "Math requires practice. Are you asking about Algebra, Geometry, or Trigonometry?",
+                science: "Science is fascinating! Is your question about Biology, Chemistry, or Physics?",
+                tips: "To prepare for exams, make a schedule, review past papers, and get enough sleep!"
+            },
+            si: {
+                greeting: "ආයුබෝවන්! මම ඔබේ AI අධ්‍යාපන සහයකාර. මට මොනවා දැනගන්න ඕන?",
+                topics: ["ගණිතය", "විද්‍යාව", "ඉතිහාසය", "ඉංග්‍රීසි", "විභාගය", "විෂය"],
+                generic: "මට ගණිතය, විද්‍යාව, ඉතිහාසය සහ විභාග උපදේශ ගැන උදව් කල හැක. විශේෂ ප්‍රශ්නයක් අහන්න!",
+                safety: "මම අධ්‍යාපනය සඳහා පමණක් සැකසු ඇත. මට ඊට අදාළ නැත.",
+                math: "ගණිතය පුහුණුවක් අවශ්‍ය වේ. ඔබ වීජ ගණිතය, ජ්‍යාමිතිය නැතහොත් ත්‍රිකෝණමිතිය ගැන ප්‍රශ්න කරන්නද?",
+                science: "විද්‍යාව පුදුම සහගතයි! ජීව විද්‍යාව, රසායන විද්‍යාව නැතහොත් භෞතික විද්‍යාව ගැන ද?",
+                tips: "විභාග සඳහා සූදානම් වීමට කාල සටහනක් සකසන්න, පැරණි ප්‍රශ්න පත්‍ර පරීක්ෂා කරන්න සහ ප්‍රමාණවත් නින්දක් ගන්න!"
+            },
+            ta: {
+                greeting: "வணக்கம்! நான் உங்கள் AI கல்வி உதவியாளர். நான் எப்படி உதவ முடியும்?",
+                topics: ["கணிதம்", "அறிவியல்", "வரலாறு", "ஆங்கிலம்", "தேர்வு", "பாடம்"],
+                generic: "கணிதம், அறிவியல், வரலாறு மற்றும் தேர்வு குறிப்புகள் பற்றி உதவ முடியும். ஒரு குறிப்பிட்ட கேள்வியைக் கேளுங்கள்!",
+                safety: "நான் கல்வி நோக்கத்திற்காக மட்டுமே வடிவமைக்கப்பட்டுள்ளேன். அதற்கு நான் பதிலளிக்க முடியாது.",
+                math: "கணிதம் நடைமுறை தேவைப்படுகிறது. நீங்கள் இயற்கணிதம், வடிவியல் அல்லது முக்கோணவியல் பற்றி கேட்கிறீர்களா?",
+                science: "அறிவியல் அற்புதமானது! உயிரியல், வேதியியல் அல்லது இயற்பியல் பற்றி கேள்வியா?",
+                tips: "தேர்வுக்குத் தயாராவதற்கு, கால அட்டவணை தயாரிக்கவும், முந்தைய கேள்வித்தாள்களை மதிப்பாய்வு செய்யவும்!"
+            }
+        };
 
         // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -655,16 +898,9 @@
 
             document.getElementById('navLinks').classList.remove('mobile-active');
 
-            // Refresh specific components when navigating
-            if(sectionId === 'reports') {
-                loadReports();
-            }
-            if(sectionId === 'announcements') {
-                renderAnnouncements(); 
-            }
-            if(sectionId === 'home') {
-                renderHomeAnnouncements();
-            }
+            if(sectionId === 'reports') loadReports();
+            if(sectionId === 'announcements') renderAnnouncements(); 
+            if(sectionId === 'home') renderHomeAnnouncements();
         }
 
         function toggleMobileMenu() {
@@ -695,12 +931,7 @@
         function loadAnnouncements() {
             let announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
             if (announcements.length === 0) {
-                const defaultAnn = {
-                    id: Date.now(),
-                    title: "Welcome to Jayapala School System",
-                    msg: "Welcome! This is the default announcement.",
-                    date: new Date().toLocaleDateString()
-                };
+                const defaultAnn = { id: Date.now(), title: "Welcome to Jayapala School System", msg: "Welcome! This is the default announcement.", date: new Date().toLocaleDateString() };
                 announcements.push(defaultAnn);
                 localStorage.setItem('announcements', JSON.stringify(announcements));
             }
@@ -712,21 +943,16 @@
             const grid = document.getElementById('home-ann-grid');
             const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
             grid.innerHTML = '';
-
             announcements.sort((a, b) => b.id - a.id);
-            const previewList = announcements.slice(0, 2);
-
-            previewList.forEach((ann) => {
+            announcements.slice(0, 2).forEach((ann) => {
                 const card = document.createElement('div');
                 const isToday = ann.date === new Date().toLocaleDateString();
-                const cardClass = isToday ? 'glass-content ann-card new' : 'glass-content ann-card';
-
+                card.className = isToday ? 'glass-content ann-card new' : 'glass-content ann-card';
                 card.innerHTML = `
                     <span class="ann-date"><i class="far fa-calendar-alt"></i> ${ann.date}</span>
                     <h3 class="ann-title">${ann.title}</h3>
                     <p>${ann.msg.substring(0, 100)}${ann.msg.length > 100 ? '...' : ''}</p>
                 `;
-                card.className = cardClass;
                 grid.appendChild(card);
             });
         }
@@ -737,26 +963,18 @@
             const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
             
             grid.innerHTML = '';
-
-            if (isOwner) {
-                adminPanel.style.display = 'block';
-            } else {
-                adminPanel.style.display = 'none';
-            }
-
+            adminPanel.style.display = isOwner ? 'block' : 'none';
             announcements.sort((a, b) => b.id - a.id);
 
             announcements.forEach((ann) => {
                 const card = document.createElement('div');
                 const isToday = ann.date === new Date().toLocaleDateString();
-                const cardClass = isToday ? 'glass-content ann-card new' : 'glass-content ann-card';
-
+                card.className = isToday ? 'glass-content ann-card new' : 'glass-content ann-card';
                 card.innerHTML = `
                     <span class="ann-date"><i class="far fa-calendar-alt"></i> ${ann.date}</span>
                     <h3 class="ann-title">${ann.title}</h3>
                     <p>${ann.msg}</p>
                 `;
-                card.className = cardClass;
                 grid.appendChild(card);
             });
         }
@@ -764,26 +982,15 @@
         function postAnnouncement() {
             const title = document.getElementById('ann-title').value.trim();
             const msg = document.getElementById('ann-msg').value.trim();
+            if (!title || !msg) return showToast("Please enter a title and message.");
 
-            if (!title || !msg) {
-                showToast("Please enter a title and message.");
-                return;
-            }
-
-            const newAnn = {
-                id: Date.now(),
-                title: title,
-                msg: msg,
-                date: new Date().toLocaleDateString()
-            };
-
+            const newAnn = { id: Date.now(), title: title, msg: msg, date: new Date().toLocaleDateString() };
             const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
             announcements.push(newAnn);
             localStorage.setItem('announcements', JSON.stringify(announcements));
 
             document.getElementById('ann-title').value = '';
             document.getElementById('ann-msg').value = '';
-
             showToast("Announcement Posted!");
             renderAnnouncements();
             renderHomeAnnouncements();
@@ -797,14 +1004,12 @@
             }
         }
 
-        // --- Authentication System ---
+        // --- Auth & Reports ---
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerText = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         function checkSession() {
@@ -818,63 +1023,33 @@
         function register() {
             const name = document.getElementById('reg-name').value.trim();
             const pass = document.getElementById('reg-pass').value.trim();
-
-            if (!name || !pass) {
-                showToast("Please fill in all fields.");
-                return;
-            }
-
+            if (!name || !pass) return showToast("Please fill in all fields.");
             const users = JSON.parse(localStorage.getItem('users') || '[]');
-            if (users.find(u => u.name === name)) {
-                showToast("User already exists.");
-                return;
-            }
-
+            if (users.find(u => u.name === name)) return showToast("User already exists.");
             users.push({ name, pass });
             localStorage.setItem('users', JSON.stringify(users));
-            showToast("Registration successful!");
-            navigate('login');
+            showToast("Registration successful!"); navigate('login');
         }
 
         function login() {
             const name = document.getElementById('login-name').value.trim();
             const pass = document.getElementById('login-pass').value.trim();
-
-            if (name === 'Shenal Anuhas' && pass === 'shenal11') {
-                loginSuccess(name, true, true);
-                return;
-            }
-
+            if (name === 'Shenal Anuhas' && pass === 'shenal11') return loginSuccess(name, true, true);
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             const validUser = users.find(u => u.name === name && u.pass === pass);
-
-            if (validUser) {
-                loginSuccess(validUser.name, false, true);
-            } else {
-                showToast("Invalid username or password.");
-            }
+            if (validUser) loginSuccess(validUser.name, false, true);
+            else showToast("Invalid username or password.");
         }
 
         function loginSuccess(name, ownerFlag, saveSession) {
-            currentUser = name;
-            isOwner = ownerFlag;
-
+            currentUser = name; isOwner = ownerFlag;
             document.getElementById('nav-login').style.display = 'none';
             document.getElementById('nav-register').style.display = 'none';
             document.getElementById('nav-logout').style.display = 'block';
             document.getElementById('user-display').style.display = 'flex';
             document.getElementById('username-span').innerText = name;
-
-            if (isOwner) {
-                document.getElementById('owner-display').style.display = 'flex';
-            } else {
-                document.getElementById('owner-display').style.display = 'none';
-            }
-
-            if (saveSession) {
-                localStorage.setItem('currentUser', JSON.stringify({ name, isOwner }));
-            }
-            
+            document.getElementById('owner-display').style.display = isOwner ? 'flex' : 'none';
+            if (saveSession) localStorage.setItem('currentUser', JSON.stringify({ name, isOwner }));
             showToast(`Welcome, ${name}!`);
             navigate('home');
             renderAnnouncements(); 
@@ -882,88 +1057,144 @@
 
         function logout() {
             localStorage.removeItem('currentUser');
-            currentUser = null;
-            isOwner = false;
-
+            currentUser = null; isOwner = false;
             document.getElementById('nav-login').style.display = 'block';
             document.getElementById('nav-register').style.display = 'block';
             document.getElementById('nav-logout').style.display = 'none';
             document.getElementById('user-display').style.display = 'none';
             document.getElementById('owner-display').style.display = 'none';
-            
-            document.getElementById('login-name').value = '';
-            document.getElementById('login-pass').value = '';
-
             showToast("Logged out.");
             navigate('home');
             renderAnnouncements();
         }
 
-        // --- Report System Logic ---
         function submitReport() {
             const name = document.getElementById('rep-name').value.trim();
             const subject = document.getElementById('rep-subject').value.trim();
             const msg = document.getElementById('rep-msg').value.trim();
-
-            if (!name || !subject || !msg) {
-                showToast("Please fill all fields.");
-                return;
-            }
-
+            if (!name || !subject || !msg) return showToast("Please fill all fields.");
             const newReport = { name, subject, msg, date: new Date().toLocaleString() };
-            
             const reports = JSON.parse(localStorage.getItem('reports') || '[]');
             reports.push(newReport);
             localStorage.setItem('reports', JSON.stringify(reports));
-
             showToast("Report sent successfully!");
-
-            document.getElementById('rep-name').value = '';
-            document.getElementById('rep-subject').value = '';
-            document.getElementById('rep-msg').value = '';
+            document.getElementById('rep-name').value = ''; document.getElementById('rep-subject').value = ''; document.getElementById('rep-msg').value = '';
         }
 
         function loadReports() {
             const container = document.getElementById('report-list-container');
             const list = document.getElementById('report-list');
             const errorMsg = document.getElementById('report-login-msg');
-            
-            // Always reset visibility
-            container.style.display = 'none';
-            errorMsg.style.display = 'none';
+            container.style.display = 'none'; errorMsg.style.display = 'none';
 
-            if (!currentUser || !isOwner) {
-                // Not logged in as owner
-                errorMsg.style.display = 'block';
-                return;
-            }
-
-            // Logged in as owner
+            if (!currentUser || !isOwner) { errorMsg.style.display = 'block'; return; }
             container.style.display = 'block';
-            
             const reports = JSON.parse(localStorage.getItem('reports') || '[]');
-            
-            if (reports.length === 0) {
-                list.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.7;"><i class="fas fa-folder-open"></i> No reports submitted yet.</div>';
-                return;
-            }
-
+            if (reports.length === 0) { list.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.7;"><i class="fas fa-folder-open"></i> No reports submitted yet.</div>'; return; }
             list.innerHTML = '';
-            // Show newest first
-            reports.reverse().forEach((rep, index) => {
+            reports.reverse().forEach((rep) => {
                 const item = document.createElement('div');
                 item.className = 'report-item glass-content';
                 item.innerHTML = `
-                    <div class="report-header">
-                        <strong>${rep.subject}</strong>
-                        <small style="color:#ccc;">${rep.date}</small>
-                    </div>
+                    <div class="report-header"><strong>${rep.subject}</strong><small style="color:#ccc;">${rep.date}</small></div>
                     <p style="margin-bottom: 5px; font-weight:600; color:var(--secondary-color);">From: ${rep.name}</p>
                     <p style="margin-top: 10px; line-height: 1.4;">${rep.msg}</p>
                 `;
                 list.appendChild(item);
             });
         }
+
+        // --- AI Chatbot Logic ---
+        function toggleChat() {
+            const window = document.getElementById('chat-window');
+            window.style.display = window.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function setChatLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.lang-btn[onclick="setChatLang('${lang}')"]`).classList.add('active');
+            
+            // Clear and reset greeting
+            const body = document.getElementById('chat-body');
+            body.innerHTML = '';
+            const typing = document.getElementById('typing-indicator');
+            typing.style.display = 'none';
+            
+            addAiMessage(aiResponses[lang].greeting);
+        }
+
+        function handleChatEnter(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addUserMessage(text);
+            input.value = '';
+
+            // Show typing indicator
+            const typing = document.getElementById('typing-indicator');
+            typing.style.display = 'block';
+            document.getElementById('chat-body').scrollTop = document.getElementById('chat-body').scrollHeight;
+
+            // Simulate AI Delay
+            setTimeout(() => {
+                typing.style.display = 'none';
+                const response = generateAIResponse(text);
+                addAiMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function addUserMessage(text) {
+            const body = document.getElementById('chat-body');
+            const div = document.createElement('div');
+            div.className = 'chat-msg msg-user';
+            div.innerText = text;
+            body.insertBefore(div, document.getElementById('typing-indicator'));
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function addAiMessage(text) {
+            const body = document.getElementById('chat-body');
+            const div = document.createElement('div');
+            div.className = 'chat-msg msg-ai';
+            div.innerText = text;
+            body.insertBefore(div, document.getElementById('typing-indicator'));
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function generateAIResponse(text) {
+            const lowerText = text.toLowerCase();
+            const langData = aiResponses[currentLang];
+
+            // Simple Keyword Matching (Simulating NLP)
+            for (let topic of langData.topics) {
+                if (lowerText.includes(topic)) {
+                    if (topic === 'math' || topic === 'ගණිතය' || topic === 'கணிதம்') return langData.math;
+                    if (topic === 'science' || topic === 'විද්‍යාව' || topic === 'அறிவியல்') return langData.science;
+                    if (topic === 'exam' || topic === 'homework' || topic === 'විභාගය' || topic === 'தேர்வு') return langData.tips;
+                    // If specific keyword found but not mapped above, return generic but relevant
+                    return langData.generic;
+                }
+            }
+
+            // Basic greeting detection
+            if (lowerText.includes('hello') || lowerText.includes('hi') || lowerText.includes('හායි') || lowerText.includes('வணக்கம்')) {
+                return langData.greeting;
+            }
+
+            // Safety fallback (Simulated)
+            if (lowerText.includes('bad') || lowerText.includes('hate') || lowerText.includes('kill')) {
+                return langData.safety;
+            }
+
+            return langData.generic;
+        }
+
     </script>
 </body>
 </html>
